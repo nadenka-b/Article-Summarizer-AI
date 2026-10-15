@@ -25,6 +25,7 @@ def main() -> None:
         port=8000,
         reload=True,
         log_level="warning",
+        reload_excludes=["logs/*", "*.log"],  # исключаем логи из watchfiles
     )
 
 

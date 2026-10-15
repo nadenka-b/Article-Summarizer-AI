@@ -1,0 +1,37 @@
+# Virtual env
+.venv/
+venv/
+env/
+
+# Caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Local data
+summarizer.db
+*.sqlite
+*.sqlite3
+
+# Env
+.env
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Docker
+infrastructure/

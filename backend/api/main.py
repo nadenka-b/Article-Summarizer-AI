@@ -15,6 +15,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.api.routes import health
 from backend.core.config import get_settings
 from backend.utils.logging import setup_logging
+from backend.db.base import Base
+from backend.db.session import engine
+# ВАЖНО: импортируем модели, чтобы SQLAlchemy знала о них
+from backend.db import models  # noqa: F401
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -36,7 +40,16 @@ async def lifespan(app: FastAPI):
     # - инициализация Qdrant-коллекции — этап 7
     # - прогрев эмбеддингов — этап 7
 
+    # Создание таблиц
+    logger.info("Creating database tables...")
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    logger.info("Database tables ready")
     yield
+
+    # Закрытие соединений
+    logger.info("Closing database connections...")
+    await engine.dispose()
 
     logger.info("=" * 60)
     logger.info("%s stopped", settings.PROJECT_NAME)

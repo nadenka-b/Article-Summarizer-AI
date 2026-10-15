@@ -114,6 +114,9 @@ LOGGING_CONFIG = {
         "sentence_transformers": {"level": "WARNING", "propagate": False},
         "huggingface_hub": {"level": "WARNING", "propagate": False},
         "passlib": {"level": "WARNING", "propagate": False},
+        "aiosqlite": {"level": "WARNING", "propagate": False},
+        "watchfiles": {"level": "WARNING", "propagate": False},
+        "watchfiles.main": {"level": "WARNING", "propagate": False},
     },
     "root": {
         "level": "DEBUG",

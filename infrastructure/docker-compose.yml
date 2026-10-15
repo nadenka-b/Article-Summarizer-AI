@@ -1,0 +1,68 @@
+# infrastructure/docker-compose.yml
+
+services:
+  # ============================================================================
+  # PostgreSQL
+  # ============================================================================
+  db:
+    image: postgres:16-alpine
+    container_name: summarizer_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: summarizer_user
+      POSTGRES_PASSWORD: summarizer_password
+      POSTGRES_DB: summarizer_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U summarizer_user -d summarizer_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - summarizer_net
+
+  # ============================================================================
+  # FastAPI app
+  # ============================================================================
+  app:
+    build:
+      context: ..
+      dockerfile: infrastructure/Dockerfile
+    container_name: summarizer_app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Переопределяем DATABASE_URL для контейнера: db — имя сервиса
+      DATABASE_URL: postgresql://summarizer_user:summarizer_password@db:5432/summarizer_db
+      DEBUG: "true"
+      PROJECT_NAME: Article-Summarizer-AI
+      OLLAMA_HOST: host.docker.internal
+      OLLAMA_PORT: "11434"
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: "6333"
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ../backend:/app/backend    # для hot-reload в dev
+      - ../logs:/app/logs
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - summarizer_net
+
+volumes:
+  postgres_data:
+
+networks:
+  summarizer_net:
+    driver: bridge
