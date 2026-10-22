@@ -45,6 +45,12 @@ services:
       QDRANT_HOST: qdrant
       QDRANT_PORT: "6333"
       REDIS_URL: redis://redis:6379/0
+      LMSTUDIO_URL: http://host.docker.internal:1234/v1
+      LMSTUDIO_MODEL: qwen2.5-7b-instruct-1m
+      # Ollama отключена
+      OLLAMA_HOST: ""
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # для Linux (на Windows/macOS не мешает)
     volumes:
       - ../backend:/app/backend    # для hot-reload в dev
       - ../logs:/app/logs

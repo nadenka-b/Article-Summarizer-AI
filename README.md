@@ -14,7 +14,7 @@ Article-Summarizer-AI — это интеллектуальная система
 
 ## Стек технологий
 - **Backend:** FastAPI, SQLAlchemy (async), Celery, Redis
-- **LLM / Движки:** Ollama (qwen2.5), HuggingFace Transformers (Qwen, модели NLLB)
+- **LLM / Движки:** LM Studio (OpenAI-совместимый API)
 - **RAG & Векторный поиск:** Rank-BM25 (лексический поиск) + Qdrant (семантический поиск) + RRF-фьюжн
 - **Эмбеддинги:** sentence-transformers (paraphrase-multilingual-MiniLM-L12-v2)
 - **Парсинг и обработка текста:** pdfplumber / PyMuPDF (или интеграция с GROBID), NLTK

@@ -18,7 +18,7 @@ class TestSettingsDefaults:
 
     def test_summarization_engine_default(self):
         s = make_settings()
-        assert s.SUMMARIZATION_ENGINE in {"auto", "ollama", "huggingface"}
+        assert s.SUMMARIZATION_ENGINE in {"auto", "ollama"}
 
     def test_summary_mode_default(self):
         s = make_settings()

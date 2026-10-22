@@ -43,9 +43,7 @@ class Settings(BaseSettings):
     SUMMARIZATION_ENGINE: str = Field(
         default="auto", validation_alias="SUMMARIZATION_ENGINE"
     )
-    FALLBACK_TO_HF_ON_ERROR: bool = Field(
-        default=True, validation_alias="FALLBACK_TO_HF_ON_ERROR"
-    )
+
     SUMMARY_MODE: str = Field(
         default="abstract", validation_alias="SUMMARY_MODE"
     )  # abstract | section_wise
@@ -88,21 +86,15 @@ class Settings(BaseSettings):
     )
 
     # ========================================================================
-    # HuggingFace (запасной движок)
+    # LM Studio (OpenAI-совместимый сервер на хосте)
     # ========================================================================
-    HF_TOKEN: Optional[str] = Field(default=None, validation_alias="HF_TOKEN")
-    HF_SUMMARIZATION_MODEL: str = Field(
-        default="facebook/bart-large-cnn",
-        validation_alias="HF_SUMMARIZATION_MODEL",
+    LMSTUDIO_URL: str = Field(
+        default="http://localhost:1234/v1",
+        validation_alias="LMSTUDIO_URL",
     )
-    HF_CRITIC_MODEL: Optional[str] = Field(
-        default=None, validation_alias="HF_CRITIC_MODEL"
-    )
-    HF_EDITOR_MODEL: Optional[str] = Field(
-        default=None, validation_alias="HF_EDITOR_MODEL"
-    )
-    HF_VALIDATOR_MODEL: Optional[str] = Field(
-        default=None, validation_alias="HF_VALIDATOR_MODEL"
+    LMSTUDIO_MODEL: str = Field(
+        default="qwen2.5-7b-instruct-1m",
+        validation_alias="LMSTUDIO_MODEL",
     )
 
     # ========================================================================
@@ -183,6 +175,13 @@ class Settings(BaseSettings):
             return []
         return [m.strip() for m in self.ENSEMBLE_MODELS.split(",") if m.strip()]
 
+    @property
+    def lmstudio_chat_url(self) -> str:
+        return f"{self.LMSTUDIO_URL.rstrip('/')}/chat/completions"
+
+    @property
+    def lmstudio_models_url(self) -> str:
+        return f"{self.LMSTUDIO_URL.rstrip('/')}/models"
     # ========================================================================
     # Validators
     # ========================================================================
@@ -190,7 +189,7 @@ class Settings(BaseSettings):
     @field_validator("SUMMARIZATION_ENGINE")
     @classmethod
     def validate_summarization_engine(cls, v: str) -> str:
-        allowed = {"auto", "ollama", "huggingface"}
+        allowed = {"auto", "ollama"}
         if v not in allowed:
             raise ValueError(
                 f"SUMMARIZATION_ENGINE должен быть одним из {allowed}, получено: {v!r}"
@@ -238,3 +237,4 @@ def get_settings() -> Settings:
     а последующие вызовы вернут уже созданный объект.
     """
     return Settings()
+

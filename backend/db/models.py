@@ -165,7 +165,7 @@ class Summary(Base):
 
     # Модель
     model_used: Mapped[str | None] = mapped_column(String(100), nullable=True)
-    engine_used: Mapped[str | None] = mapped_column(String(20), nullable=True)  # ollama | huggingface | api
+    engine_used: Mapped[str | None] = mapped_column(String(20), nullable=True)  # ollama  | api
 
     # Итерации агентов
     supervisor_iterations: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
@@ -385,7 +385,7 @@ class LLMCall(Base):
     model_name: Mapped[str] = mapped_column(String(100), nullable=False)
     provider: Mapped[str] = mapped_column(
         String(20), nullable=False
-    )  # ollama | huggingface | openai | anthropic | ...
+    )  # ollama  | openai | anthropic | ...
     parameters: Mapped[str | None] = mapped_column(Text, nullable=True)  # JSON
 
     # Хэши промпта/ответа (сами тексты не храним — слишком много)

@@ -39,10 +39,10 @@ class ValidationError(SummarizerException):
 
 
 class LLMError(SummarizerException):
-    """Ошибка при обращении к LLM (Ollama, HuggingFace, внешние API)."""
+    """Ошибка при обращении к LLM ( внешние API)."""
     pass
 
 
 class ConfigurationError(SummarizerException):
-    """Ошибка конфигурации (не задан HF_TOKEN, некорректный DATABASE_URL и т.п.)."""
+    """Ошибка конфигурации (некорректный DATABASE_URL и т.п.)."""
     pass
