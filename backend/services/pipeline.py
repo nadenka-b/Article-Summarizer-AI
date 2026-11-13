@@ -34,7 +34,8 @@ from backend.core.exceptions import SummarizerException
 from backend.data.cache import SummaryCacheManager
 from backend.data.chunker import chunk_text
 from backend.data.knowledge_base import KBManager, sha256_text
-from backend.db.models import Article, ArticleChunk, ReasoningLog, Summary, UncertainExample, User
+from backend.db.models import Article, ArticleChunk, ReasoningLog, Summary, User
+from backend.hitl.active_learning import ActiveLearningManager
 from backend.retrieval.hybrid_retriever import format_few_shot_examples, hybrid_search
 from backend.retrieval.vector_index import get_vector_index
 
@@ -46,9 +47,6 @@ _summarization_semaphore = asyncio.Semaphore(4)
 
 ARXIV_PDF_URL = "https://arxiv.org/pdf/{arxiv_id}.pdf"
 ARXIV_ABS_URL = "https://arxiv.org/abs/{arxiv_id}"
-
-# Порог направления в HITL: ниже — очередь модерации.
-HITL_CRITIC_THRESHOLD = 7.0
 
 
 @dataclass
@@ -278,19 +276,15 @@ async def perform_summarization(
         )
 
         # --- HITL: плохое качество → очередь модерации ---
-        if _needs_human_review(state):
-            db.add(UncertainExample(
+        if settings.ACTIVE_LEARNING_ENABLED and _needs_human_review(state):
+            await ActiveLearningManager.add_uncertain_example(
+                db,
                 summary_id=summary_row.id,
                 model_output=summary,
                 critic_score=result.critic_score,
                 validation_passed=result.validation_passed,
-                status="pending",
-            ))
-            result.hitl_created = True
-            logger.info(
-                "HITL: резюме %s отправлено в очередь модерации",
-                summary_row.id,
             )
+            result.hitl_created = True
 
         # --- Кэш ---
         if use_cache:
@@ -310,7 +304,7 @@ def _needs_human_review(state: Dict[str, Any]) -> bool:
     if state.get("critic_failed", False):
         return True
     score = state.get("critic_score")
-    return score is not None and float(score) < HITL_CRITIC_THRESHOLD
+    return score is not None and float(score) < settings.HITL_CRITIC_THRESHOLD
 
 
 async def _persist_article(

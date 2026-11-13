@@ -178,3 +178,82 @@ class SummaryOut(BaseModel):
     validation_passed: Optional[bool] = None
     supervisor_iterations: int
     created_at: datetime
+
+
+# ============================================================================
+# HITL — очередь модерации (этап 10)
+# ============================================================================
+class HITLQueueItem(BaseModel):
+    """Пункт очереди модерации."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    summary_id: str
+    model_output: str
+    critic_score: Optional[float] = None
+    validation_passed: Optional[bool] = None
+    status: str
+    created_at: datetime
+
+
+class HITLDetail(HITLQueueItem):
+    """Пункт очереди с текстом статьи (для интерфейса редактора)."""
+
+    article_title: Optional[str] = None
+    article_text: Optional[str] = None
+    corrected_summary: Optional[str] = None
+    reviewed_at: Optional[datetime] = None
+
+
+class HITLConfirmRequest(BaseModel):
+    """Правка редактора: исправленное резюме."""
+
+    corrected_summary: str = Field(
+        ..., min_length=50, description="Исправленный текст резюме"
+    )
+
+
+class HITLRejectRequest(BaseModel):
+    """Отклонение с причиной."""
+
+    reason: Optional[str] = Field(default=None, max_length=2000)
+
+
+class HITLReviewResponse(BaseModel):
+    """Результат обработки пункта очереди."""
+
+    id: str
+    status: str
+    kb_inserted: Optional[bool] = None
+    message: str
+
+
+class HITLStats(BaseModel):
+    """Статистика очереди."""
+
+    pending: int
+    confirmed: int
+    rejected: int
+
+
+# ============================================================================
+# Admin — управление пользователями (этап 10)
+# ============================================================================
+class UserRoleRequest(BaseModel):
+    """Смена роли пользователя (только admin)."""
+
+    role: str = Field(..., description="Новая роль: user | editor | admin")
+
+
+class UserAdminOut(BaseModel):
+    """Пользователь для админ-списка."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    email: EmailStr
+    username: str
+    role: str
+    is_active: bool
+    created_at: datetime

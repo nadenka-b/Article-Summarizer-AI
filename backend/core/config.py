@@ -40,6 +40,12 @@ class Settings(BaseSettings):
         default="admin@example.com",
         validation_alias="ADMIN_EMAIL",
     )
+    # Порог направления резюме в очередь HITL: ниже этого балла Critic
+    # (или провал валидации) — резюме уходит редактору. Подними до 9.5,
+    # чтобы проверить HITL-контур вживую на любой генерации.
+    HITL_CRITIC_THRESHOLD: float = Field(
+        default=7.0, validation_alias="HITL_CRITIC_THRESHOLD"
+    )
 
     # ========================================================================
     # Summarization

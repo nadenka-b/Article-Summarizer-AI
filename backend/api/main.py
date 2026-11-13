@@ -12,7 +12,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api.routes import auth, health, summarize
+from backend.api.routes import admin, auth, health, summarize
+from backend.api.routes import hitl as hitl_routes
 from backend.core.config import get_settings
 from backend.utils.llm_client import close_llm_clients
 from backend.utils.logging import setup_logging
@@ -74,6 +75,8 @@ app.include_router(health.router)
 app.include_router(auth.router)
 app.include_router(summarize.router)
 app.include_router(summarize.summaries_router)
+app.include_router(hitl_routes.router)
+app.include_router(admin.router)
 
 
 @app.get("/", tags=["root"])
