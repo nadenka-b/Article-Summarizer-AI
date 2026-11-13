@@ -35,6 +35,7 @@ data/*
 !data/import/
 !data/import/*.csv
 !data/import/*.json
+!data/import/*.md
 !data/import/.gitkeep
 *.db
 *.sqlite

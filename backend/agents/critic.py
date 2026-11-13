@@ -111,6 +111,7 @@ reasoning, suggestions, missing_terms."""
         state["critic_coherence"] = co
         state["critic_style"] = s
         state["critic_score"] = round(avg, 2)
+        state["critic_failed"] = False
         state["critic_reasoning"] = str(parsed.get("reasoning", ""))[:2000]
         state["critic_suggestions"] = self._list(parsed.get("suggestions"))
         state["critic_missing_terms"] = self._list(parsed.get("missing_terms"))
@@ -119,11 +120,18 @@ reasoning, suggestions, missing_terms."""
         return state
 
     def _fallback(self, state, reason: str) -> Dict[str, Any]:
-        state["critic_completeness"] = 5.0
-        state["critic_accuracy"] = 5.0
-        state["critic_coherence"] = 5.0
-        state["critic_style"] = 5.0
-        state["critic_score"] = 5.0
+        """
+        Оценки НЕТ — поэтому score=None и critic_failed=True.
+
+        Важно: не подставляем фиктивные 5.0 — фейковый балл неотличим
+        от реальной оценки и попадает в БД как будто критик оценивал.
+        """
+        state["critic_completeness"] = None
+        state["critic_accuracy"] = None
+        state["critic_coherence"] = None
+        state["critic_style"] = None
+        state["critic_score"] = None
+        state["critic_failed"] = True
         state["critic_reasoning"] = f"Fallback: {reason}"
         state["critic_suggestions"] = []
         state["critic_missing_terms"] = []

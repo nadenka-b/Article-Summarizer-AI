@@ -14,6 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.api.routes import auth, health
 from backend.core.config import get_settings
+from backend.utils.llm_client import close_llm_clients
 from backend.utils.logging import setup_logging
 from backend.db.base import Base
 from backend.db.session import engine
@@ -31,14 +32,8 @@ async def lifespan(app: FastAPI):
     logger.info("=" * 60)
     logger.info("%s starting...", settings.PROJECT_NAME)
     logger.info("Debug mode: %s", settings.DEBUG)
-    logger.info("Summarization engine: %s", settings.SUMMARIZATION_ENGINE)
     logger.info("Summary mode: %s", settings.SUMMARY_MODE)
     logger.info("=" * 60)
-
-    # Здесь позже будет:
-    # - создание таблиц БД (Base.metadata.create_all) — этап 3
-    # - инициализация Qdrant-коллекции — этап 7
-    # - прогрев эмбеддингов — этап 7
 
     # Создание таблиц
     logger.info("Creating database tables...")
@@ -50,6 +45,7 @@ async def lifespan(app: FastAPI):
     # Закрытие соединений
     logger.info("Closing database connections...")
     await engine.dispose()
+    await close_llm_clients()
 
     logger.info("=" * 60)
     logger.info("%s stopped", settings.PROJECT_NAME)

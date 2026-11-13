@@ -16,9 +16,16 @@ class TestSettingsDefaults:
         s = make_settings()
         assert s.PROJECT_NAME == "Article-Summarizer-AI"
 
-    def test_summarization_engine_default(self):
+    def test_admin_email_default(self):
         s = make_settings()
-        assert s.SUMMARIZATION_ENGINE in {"auto", "ollama"}
+        assert s.ADMIN_EMAIL == "admin@example.com"
+
+    def test_agent_models_default_none(self):
+        s = make_settings()
+        assert s.SUMMARIZER_MODEL is None
+        assert s.CRITIC_MODEL is None
+        assert s.EDITOR_MODEL is None
+        assert s.VALIDATOR_MODEL is None
 
     def test_summary_mode_default(self):
         s = make_settings()
@@ -40,30 +47,17 @@ class TestAsyncDatabaseUrl:
 
 
 class TestUrls:
-    def test_ollama_url(self):
-        s = make_settings(OLLAMA_HOST="myhost", OLLAMA_PORT=9999)
-        assert s.ollama_url == "http://myhost:9999/api/generate"
+    def test_lmstudio_urls(self):
+        s = make_settings(LMSTUDIO_URL="http://llm.local:1234/v1")
+        assert s.lmstudio_chat_url == "http://llm.local:1234/v1/chat/completions"
+        assert s.lmstudio_models_url == "http://llm.local:1234/v1/models"
 
     def test_qdrant_url(self):
         s = make_settings(QDRANT_HOST="qdrant.local", QDRANT_PORT=6334)
         assert s.qdrant_url == "http://qdrant.local:6334"
 
 
-class TestEnsembleModels:
-    def test_two_models(self):
-        s = make_settings(ENSEMBLE_MODELS="model1,model2")
-        assert s.ensemble_models_list == ["model1", "model2"]
-
-    def test_with_spaces(self):
-        s = make_settings(ENSEMBLE_MODELS="model1 , model2")
-        assert s.ensemble_models_list == ["model1", "model2"]
-
-
 class TestValidation:
-    def test_invalid_engine_raises(self):
-        with pytest.raises(ValueError, match="SUMMARIZATION_ENGINE"):
-            make_settings(SUMMARIZATION_ENGINE="invalid")
-
     def test_invalid_eval_mode_raises(self):
         with pytest.raises(ValueError, match="EVAL_MODE"):
             make_settings(EVAL_MODE="invalid")

@@ -7,6 +7,8 @@ from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from typing import Any, Dict
 
+from backend.utils.async_utils import retry
+
 logger = logging.getLogger(__name__)
 
 
@@ -19,8 +21,9 @@ class Agent(ABC):
         self._log = logging.getLogger(f"agent.{self.name}")
         from backend.utils.llm_client import get_llm_client
         self._llm = get_llm_client()
+
+    @retry(max_attempts=3, delay=1.0)
     async def _call_llm(self, prompt, model=None, temperature=0.3, task="generate", db=None, request_id=None):
-        import time
         from backend.utils.llm_logger import log_llm_call
 
         start = time.perf_counter()
@@ -54,7 +57,7 @@ class Agent(ABC):
                     status=status,
                     error_message=error_msg,
                 )
-                
+
     @abstractmethod
     async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
         """Обрабатывает state и возвращает изменённый state."""

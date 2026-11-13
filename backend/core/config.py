@@ -9,7 +9,7 @@
 3. Значения по умолчанию (default) в этом классе
 """
 
-from typing import List, Optional
+from typing import Optional
 from functools import lru_cache
 
 from pydantic import Field, field_validator
@@ -36,17 +36,19 @@ class Settings(BaseSettings):
     ACTIVE_LEARNING_ENABLED: bool = Field(
         default=True, validation_alias="ACTIVE_LEARNING_ENABLED"
     )
-
-    # ========================================================================
-    # Summarization engine
-    # ========================================================================
-    SUMMARIZATION_ENGINE: str = Field(
-        default="auto", validation_alias="SUMMARIZATION_ENGINE"
+    ADMIN_EMAIL: str = Field(
+        default="admin@example.com",
+        validation_alias="ADMIN_EMAIL",
     )
 
+    # ========================================================================
+    # Summarization
+    # ========================================================================
+    # Режим по умолчанию (используется на этапе 9 в API):
     SUMMARY_MODE: str = Field(
         default="abstract", validation_alias="SUMMARY_MODE"
     )  # abstract | section_wise
+    # Лимит длины входной статьи (этап 8, chunking):
     MAX_ARTICLE_LENGTH: int = Field(
         default=50000, validation_alias="MAX_ARTICLE_LENGTH"
     )
@@ -60,14 +62,18 @@ class Settings(BaseSettings):
     )
 
     # ========================================================================
-    # Ollama (локальный LLM-сервер)
+    # LM Studio (OpenAI-совместимый сервер на хосте)
     # ========================================================================
-    OLLAMA_HOST: str = Field(
-        default="localhost", validation_alias="OLLAMA_HOST"
+    LMSTUDIO_URL: str = Field(
+        default="http://localhost:1234/v1",
+        validation_alias="LMSTUDIO_URL",
     )
-    OLLAMA_PORT: int = Field(default=11434, validation_alias="OLLAMA_PORT")
-
-    LLM_MODEL: str = Field(default="qwen2.5:7b", validation_alias="LLM_MODEL")
+    LMSTUDIO_MODEL: str = Field(
+        default="qwen2.5-7b-instruct-1m",
+        validation_alias="LMSTUDIO_MODEL",
+    )
+    # Необязательные переопределения модели для отдельных агентов
+    # (этап 8, тюнинг движка; None → LMSTUDIO_MODEL):
     SUMMARIZER_MODEL: Optional[str] = Field(
         default=None, validation_alias="SUMMARIZER_MODEL"
     )
@@ -79,22 +85,6 @@ class Settings(BaseSettings):
     )
     VALIDATOR_MODEL: Optional[str] = Field(
         default=None, validation_alias="VALIDATOR_MODEL"
-    )
-    ENSEMBLE_MODELS: str = Field(
-        default="qwen2.5:7b,llama3.1:8b",
-        validation_alias="ENSEMBLE_MODELS",
-    )
-
-    # ========================================================================
-    # LM Studio (OpenAI-совместимый сервер на хосте)
-    # ========================================================================
-    LMSTUDIO_URL: str = Field(
-        default="http://localhost:1234/v1",
-        validation_alias="LMSTUDIO_URL",
-    )
-    LMSTUDIO_MODEL: str = Field(
-        default="qwen2.5-7b-instruct-1m",
-        validation_alias="LMSTUDIO_MODEL",
     )
 
     # ========================================================================
@@ -110,6 +100,34 @@ class Settings(BaseSettings):
     )
     QDRANT_API_KEY: Optional[str] = Field(
         default=None, validation_alias="QDRANT_API_KEY"
+    )
+    # Локальный файловый режим Qdrant (без сервера): путь к папке хранения.
+    # Пусто → обычный HTTP-клиент к QDRANT_HOST:QDRANT_PORT.
+    QDRANT_LOCAL_PATH: Optional[str] = Field(
+        default=None, validation_alias="QDRANT_LOCAL_PATH"
+    )
+
+    # ========================================================================
+    # Эмбеддинги (гибридный RAG)
+    # ========================================================================
+    EMBEDDING_MODEL: str = Field(
+        default="paraphrase-multilingual-MiniLM-L12-v2",
+        validation_alias="EMBEDDING_MODEL",
+    )
+    EMBEDDING_DIM: int = Field(
+        default=384, validation_alias="EMBEDDING_DIM"
+    )
+
+    # ========================================================================
+    # Гибридный поиск (BM25 + Qdrant + RRF)
+    # ========================================================================
+    HYBRID_TOP_K: int = Field(default=5, validation_alias="HYBRID_TOP_K")
+    RRF_K: int = Field(default=60, validation_alias="RRF_K")
+    # Сколько символов исходного текста пары БЗ использовать для поиска
+    # (эмбеддинг и BM25 индексируют урезанное представление, пара целиком
+    # хранится в БД).
+    KB_SEARCH_TEXT_CHARS: int = Field(
+        default=2000, validation_alias="KB_SEARCH_TEXT_CHARS"
     )
 
     # ========================================================================
@@ -154,26 +172,9 @@ class Settings(BaseSettings):
         return url
 
     @property
-    def ollama_url(self) -> str:
-        """Полный URL для API Ollama."""
-        return f"http://{self.OLLAMA_HOST}:{self.OLLAMA_PORT}/api/generate"
-
-    @property
     def qdrant_url(self) -> str:
         """Полный URL Qdrant."""
         return f"http://{self.QDRANT_HOST}:{self.QDRANT_PORT}"
-
-    @property
-    def ensemble_models_list(self) -> List[str]:
-        """
-        Список моделей для ансамбля, распарсенный из ENSEMBLE_MODELS.
-
-        ENSEMBLE_MODELS="qwen2.5:7b,llama3.1:8b"
-        → ["qwen2.5:7b", "llama3.1:8b"]
-        """
-        if not self.ENSEMBLE_MODELS:
-            return []
-        return [m.strip() for m in self.ENSEMBLE_MODELS.split(",") if m.strip()]
 
     @property
     def lmstudio_chat_url(self) -> str:
@@ -182,19 +183,10 @@ class Settings(BaseSettings):
     @property
     def lmstudio_models_url(self) -> str:
         return f"{self.LMSTUDIO_URL.rstrip('/')}/models"
+
     # ========================================================================
     # Validators
     # ========================================================================
-
-    @field_validator("SUMMARIZATION_ENGINE")
-    @classmethod
-    def validate_summarization_engine(cls, v: str) -> str:
-        allowed = {"auto", "ollama"}
-        if v not in allowed:
-            raise ValueError(
-                f"SUMMARIZATION_ENGINE должен быть одним из {allowed}, получено: {v!r}"
-            )
-        return v
 
     @field_validator("EVAL_MODE")
     @classmethod

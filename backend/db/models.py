@@ -5,6 +5,7 @@ SQLAlchemy-модели для Article-Summarizer-AI.
 Таблицы:
 - users                  — пользователи (user/editor/admin)
 - articles               — загруженные научные статьи
+- article_chunk          — фрагмент статьи
 - summaries              — сгенерированные резюме
 - knowledge_base         — эталонные пары (текст → резюме) для RAG
 - glossary               — научные термины и аббревиатуры
@@ -28,7 +29,6 @@ from sqlalchemy import (
     UniqueConstraint,
     Index,
 )
-from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
@@ -98,15 +98,17 @@ class Article(Base):
         String(36), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
     )
     title: Mapped[str] = mapped_column(String(500), nullable=False)
-    source: Mapped[str] = mapped_column(
-        String(50), default="upload", nullable=False
-    )  # upload | arxiv | pubmed | semantic_scholar
+    # upload | corpus | arxiv | pubmed | semantic_scholar       
+    source: Mapped[str] = mapped_column(String(50), default="upload", nullable=False)
     source_id: Mapped[str | None] = mapped_column(
         String(100), nullable=True
     )  # arXiv ID, PubMed ID и т.п.
     field: Mapped[str | None] = mapped_column(
         String(20), nullable=True, index=True
     )  # cs, bio, physics, ...
+    subfield: Mapped[str | None] = mapped_column(
+        String(100), nullable=True, index=True
+    )
     language: Mapped[str] = mapped_column(String(10), default="en", nullable=False)
 
     # Текст
@@ -134,13 +136,94 @@ class Article(Base):
     summaries: Mapped[list["Summary"]] = relationship(
         back_populates="article", cascade="all, delete-orphan"
     )
+    chunks: Mapped[list["ArticleChunk"]] = relationship(
+    back_populates="article",
+    cascade="all, delete-orphan",
+    )
 
     def __repr__(self) -> str:
         return f"<Article {self.title[:50]}>"
 
 
 # ============================================================================
-# 3. summaries
+# 3. article_chunks
+# ============================================================================
+class ArticleChunk(Base):
+    """Фрагмент научной статьи для полнотекстового и векторного поиска."""
+
+    __tablename__ = "article_chunks"
+    __table_args__ = (
+        UniqueConstraint(
+            "article_id",
+            "chunk_index",
+            name="uq_article_chunk_index",
+        ),
+        Index("ix_article_chunks_text_hash", "text_hash"),
+    )
+
+    id: Mapped[str] = _uuid_col()
+
+    article_id: Mapped[str] = mapped_column(
+        String(36),
+        ForeignKey("articles.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    # Порядок фрагмента в исходной статье
+    chunk_index: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+
+    # Текст фрагмента
+    chunk_text: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+
+    # Размер фрагмента
+    char_count: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+    token_count: Mapped[int | None] = mapped_column(
+        Integer,
+        nullable=True,
+    )
+
+    # SHA-256 для проверки повторяющихся фрагментов
+    text_hash: Mapped[str] = mapped_column(
+        String(64),
+        nullable=False,
+    )
+
+    # Идентификатор соответствующей точки в Qdrant
+    qdrant_point_id: Mapped[str | None] = mapped_column(
+        String(36),
+        nullable=True,
+        unique=True,
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
+    )
+
+    # Связь с исходной статьёй
+    article: Mapped["Article"] = relationship(
+        back_populates="chunks",
+    )
+
+    def __repr__(self) -> str:
+        return (
+            f"<ArticleChunk article={self.article_id} "
+            f"index={self.chunk_index}>"
+        )
+
+# ============================================================================
+# 4. summaries
 # ============================================================================
 class Summary(Base):
     """Сгенерированное резюме."""
@@ -182,7 +265,7 @@ class Summary(Base):
 
 
 # ============================================================================
-# 4. knowledge_base
+# 5. knowledge_base
 # ============================================================================
 class KnowledgeBase(Base):
     """
@@ -218,7 +301,7 @@ class KnowledgeBase(Base):
 
 
 # ============================================================================
-# 5. glossary
+# 6. glossary
 # ============================================================================
 class GlossaryDB(Base):
     """
@@ -237,7 +320,7 @@ class GlossaryDB(Base):
     category: Mapped[str | None] = mapped_column(
         String(50), nullable=True
     )  # abbreviation | concept | template
-    language: Mapped[str] = mapped_column(String(10), default="en", nullable=False)
+    language: Mapped[str] = mapped_column(String(10), default="ru", nullable=False)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
@@ -248,7 +331,7 @@ class GlossaryDB(Base):
 
 
 # ============================================================================
-# 6. uncertain_examples (HITL)
+# 7. uncertain_examples (HITL)
 # ============================================================================
 class UncertainExample(Base):
     """
@@ -288,7 +371,7 @@ class UncertainExample(Base):
 
 
 # ============================================================================
-# 7. cache
+# 8. cache
 # ============================================================================
 class SummaryCache(Base):
     """
@@ -324,7 +407,7 @@ class SummaryCache(Base):
 
 
 # ============================================================================
-# 8. reasoning_logs
+# 9. reasoning_logs
 # ============================================================================
 class ReasoningLog(Base):
     """
@@ -364,7 +447,7 @@ class ReasoningLog(Base):
 
 
 # ============================================================================
-# 9. llm_calls
+# 10. llm_calls
 # ============================================================================
 class LLMCall(Base):
     """
