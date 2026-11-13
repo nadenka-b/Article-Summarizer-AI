@@ -20,20 +20,21 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from sqlalchemy import func, select
+from sqlalchemy import delete, func, select
 
 # Определяем корень проекта, чтобы пути не зависели от места запуска скрипта.
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from backend.core.config import get_settings
+from backend.data.chunker import chunk_text
 from backend.data.knowledge_base import KBManager
-from backend.db.models import Article, KnowledgeBase, User
+from backend.db.models import Article, ArticleChunk, KnowledgeBase, User
 from backend.db.session import AsyncSessionLocal, engine
 
 
 ARTICLES_DIR = PROJECT_ROOT / "data" / "processed"
-CATEGORIES_FILE = ARTICLES_DIR / "article_categories.json"
+CATEGORIES_FILE = PROJECT_ROOT / "data" / "import" / "article_categories.json"
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -198,6 +199,46 @@ def normalize_authors(authors: Any) -> str | None:
     return str(authors)
 
 
+async def fill_article_chunks(session, source_ids: list[str]) -> int:
+    """
+    Чанкинг корпуса (этап 8): наполняет article_chunks для статей.
+
+    Идемпотентно: существующие чанки статьи заменяются новыми.
+    Возвращает количество добавленных чанков.
+    """
+    result = await session.execute(
+        select(Article).where(
+            Article.source == "corpus",
+            Article.source_id.in_(source_ids),
+        )
+    )
+    articles = result.scalars().all()
+
+    total = 0
+    for article in articles:
+        await session.execute(
+            delete(ArticleChunk).where(ArticleChunk.article_id == article.id)
+        )
+
+        text = article.full_text or ""
+        if not text.strip():
+            continue
+
+        for chunk in chunk_text(text):
+            session.add(ArticleChunk(
+                article_id=article.id,
+                chunk_index=chunk["index"],
+                chunk_text=chunk["text"],
+                char_count=chunk["char_count"],
+                token_count=len(chunk["text"]) // 4,  # грубая оценка
+                text_hash=chunk["text_hash"],
+            ))
+            total += 1
+
+    await session.flush()
+    return total
+
+
 async def import_articles(update: bool, with_kb: bool) -> None:
     settings = get_settings()
 
@@ -226,6 +267,9 @@ async def import_articles(update: bool, with_kb: bool) -> None:
     skipped = 0
     kb_added = 0
     kb_skipped = 0
+    chunks_added = 0
+    inserted_numbers: list[int] = []
+    updated_numbers: list[int] = []
 
     kb_manager = KBManager()
 
@@ -313,11 +357,24 @@ async def import_articles(update: bool, with_kb: bool) -> None:
                             for key, value in article_values.items():
                                 setattr(existing, key, value)
                             updated += 1
+                            updated_numbers.append(data["number"])
                         else:
                             skipped += 1
                     else:
                         session.add(Article(**article_values))
                         inserted += 1
+                        inserted_numbers.append(data["number"])
+
+                # Чанки корпуса (этап 8): только новые статьи,
+                # при --update — обновлённые заменяются.
+                chunk_sources = [str(n) for n in inserted_numbers]
+                if update:
+                    chunk_sources += [str(n) for n in updated_numbers]
+
+                if chunk_sources:
+                    chunks_added = await fill_article_chunks(
+                        session, chunk_sources
+                    )
 
                 # Эталонные пары для базы знаний (RAG).
                 if with_kb:
@@ -350,6 +407,7 @@ async def import_articles(update: bool, with_kb: bool) -> None:
         print(f"Новых статей: {inserted}")
         print(f"Обновлено статей: {updated}")
         print(f"Пропущено (уже в БД): {skipped}")
+        print(f"Чанков добавлено: {chunks_added}")
         if with_kb:
             print(
                 f"БЗ: добавлено пар: {kb_added}, "

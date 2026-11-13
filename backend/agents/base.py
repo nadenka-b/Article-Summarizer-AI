@@ -22,10 +22,24 @@ class Agent(ABC):
         from backend.utils.llm_client import get_llm_client
         self._llm = get_llm_client()
 
+    @property
+    def _model_override(self):
+        """
+        Пер-агентное переопределение модели (этап 8, тюнинг движка).
+
+        Имя агента маппится на настройку {NAME}_MODEL:
+        summarizer → SUMMARIZER_MODEL, critic → CRITIC_MODEL и т.д.
+        None → используется LMSTUDIO_MODEL.
+        """
+        from backend.core.config import get_settings
+
+        return getattr(get_settings(), f"{self.name.upper()}_MODEL", None)
+
     @retry(max_attempts=3, delay=1.0)
     async def _call_llm(self, prompt, model=None, temperature=0.3, task="generate", db=None, request_id=None):
         from backend.utils.llm_logger import log_llm_call
 
+        model = model or self._model_override
         start = time.perf_counter()
         status = "success"
         error_msg = None

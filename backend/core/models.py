@@ -7,7 +7,7 @@ SQLAlchemy — про хранение, Pydantic — про HTTP-контрак�
 """
 
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
@@ -91,3 +91,90 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     expires_in: int = Field(..., description="Срок жизни токена в секундах")
+
+
+# ============================================================================
+# Summarization — Requests (этап 9)
+# ============================================================================
+_ALLOWED_MODES = {"baseline", "extractor", "rag", "agents", "ensemble"}
+_ALLOWED_SUMMARY_MODES = {"abstract", "section_wise"}
+
+
+def _validate_mode(v: Optional[str]) -> Optional[str]:
+    if v is not None and v not in _ALLOWED_MODES:
+        raise ValueError(f"mode должен быть одним из {sorted(_ALLOWED_MODES)}")
+    return v
+
+
+def _validate_summary_mode(v: Optional[str]) -> Optional[str]:
+    if v is not None and v not in _ALLOWED_SUMMARY_MODES:
+        raise ValueError(
+            f"summary_mode должен быть одним из {sorted(_ALLOWED_SUMMARY_MODES)}"
+        )
+    return v
+
+
+class SummarizeBaseRequest(BaseModel):
+    """Общая часть запросов на суммаризацию."""
+
+    title: Optional[str] = Field(default=None, max_length=500)
+    field: Optional[str] = Field(default=None, max_length=20)
+    mode: Optional[str] = None
+    summary_mode: Optional[str] = None
+    use_cache: bool = True
+
+    _mode_check = field_validator("mode")(_validate_mode)
+    _summary_mode_check = field_validator("summary_mode")(_validate_summary_mode)
+
+
+class SummarizeTextRequest(SummarizeBaseRequest):
+    """Суммаризация сырого текста статьи."""
+
+    text: str = Field(..., min_length=200, description="Текст статьи")
+
+
+class SummarizeArxivRequest(SummarizeBaseRequest):
+    """Суммаризация статьи с arXiv по идентификатору."""
+
+    arxiv_id: str = Field(
+        ...,
+        pattern=r"^\d{4}\.\d{4,5}(v\d+)?$",
+        description="arXiv ID, например 2401.12345",
+    )
+
+
+# ============================================================================
+# Summarization — Responses
+# ============================================================================
+class SummaryResponse(BaseModel):
+    """Результат суммаризации."""
+
+    article_id: Optional[str] = None
+    summary_id: Optional[str] = None
+    summary: str = ""
+    mode: str
+    summary_mode: str
+    strategy: str = "none"
+    critic_score: Optional[float] = None
+    validation_passed: Optional[bool] = None
+    supervisor_iterations: int = 0
+    final_reason: str = ""
+    cached: bool = False
+    hitl_created: bool = False
+    reasoning_log: List[dict] = []
+    error: Optional[str] = None
+
+
+class SummaryOut(BaseModel):
+    """Резюме из БД (GET /summaries/{id})."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    article_id: str
+    summary_text: str
+    summary_mode: str
+    critic_score: Optional[float] = None
+    validation_passed: Optional[bool] = None
+    supervisor_iterations: int
+    created_at: datetime

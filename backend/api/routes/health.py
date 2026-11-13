@@ -3,11 +3,13 @@
 Healthcheck endpoints для Article-Summarizer-AI.
 
 /healthz  — простая liveness-проверка, приложение запустилось.
+/health   — readiness-проверка: БД + LLM-движок (LM Studio);
+            503, если хотя бы один сервис нездоров.
 /fields   — список научных областей и секций статьи.
 """
 
 import logging
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -18,6 +20,7 @@ from backend.core.constants import (
     EVAL_METRICS,
 )
 from backend.db.session import get_async_session
+from backend.utils.llm_client import get_llm_client
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["health"])
@@ -31,7 +34,7 @@ async def healthz():
 
 @router.get("/health")
 async def health(db: AsyncSession = Depends(get_async_session)):
-    """Readiness-проверка. Проверяет БД через SELECT 1."""
+    """Readiness-проверка: БД (SELECT 1) + LM Studio (GET /models)."""
     try:
         await db.execute(text("SELECT 1"))
         db_status = "healthy"
@@ -39,10 +42,23 @@ async def health(db: AsyncSession = Depends(get_async_session)):
         logger.error("Database health check failed: %s", e)
         db_status = "unhealthy"
 
-    return {
-        "status": "ok",
+    try:
+        lmstudio_ok = await get_llm_client().probe()
+        llm_status = "healthy" if lmstudio_ok else "unreachable"
+    except Exception as e:
+        logger.error("LLM engine health check failed: %s", e)
+        llm_status = "unreachable"
+
+    healthy = db_status == "healthy" and llm_status == "healthy"
+
+    body = {
+        "status": "ok" if healthy else "degraded",
         "database": db_status,
+        "llm_engine": llm_status,
     }
+    if not healthy:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=body)
+    return body
 
 
 @router.get("/fields")

@@ -1,0 +1,417 @@
+{
+  "version": 1,
+  "description": "Предварительная тематическая классификация научных статей корпуса Article-Summarizer-AI.",
+  "classification_basis": "Названия и метаданные реестра; категории требуют уточнения при необходимости по полному тексту.",
+  "categories": {
+    "ai_ml": "Искусственный интеллект и машинное обучение",
+    "nlp": "Обработка естественного языка и анализ текста",
+    "computer_vision": "Компьютерное зрение и обработка сигналов",
+    "information_systems": "Интеллектуальные и информационно-аналитические системы",
+    "data_analysis": "Анализ данных и математическое моделирование",
+    "software_engineering": "Программная инженерия и вычислительные системы",
+    "cybersecurity": "Информационная безопасность и криптография",
+    "applied_it": "Прикладные информационные технологии, экономика и управление"
+  },
+  "articles": {
+    "1": {
+      "field": "ai_ml",
+      "subfield": "recurrent_neural_networks"
+    },
+    "3": {
+      "field": "ai_ml",
+      "subfield": "neural_networks_stream_processing"
+    },
+    "5": {
+      "field": "ai_ml",
+      "subfield": "anomaly_detection"
+    },
+    "6": {
+      "field": "ai_ml",
+      "subfield": "contrastive_learning"
+    },
+    "7": {
+      "field": "ai_ml",
+      "subfield": "medical_machine_learning"
+    },
+    "9": {
+      "field": "ai_ml",
+      "subfield": "llm_ranking"
+    },
+    "16": {
+      "field": "ai_ml",
+      "subfield": "neural_networks"
+    },
+    "22": {
+      "field": "ai_ml",
+      "subfield": "human_ai_collaboration"
+    },
+    "26": {
+      "field": "ai_ml",
+      "subfield": "fraud_detection"
+    },
+    "28": {
+      "field": "ai_ml",
+      "subfield": "ai_decision_support"
+    },
+    "29": {
+      "field": "ai_ml",
+      "subfield": "health_risk_prediction"
+    },
+    "30": {
+      "field": "ai_ml",
+      "subfield": "health_risk_prediction"
+    },
+    "31": {
+      "field": "ai_ml",
+      "subfield": "neural_classification"
+    },
+    "35": {
+      "field": "ai_ml",
+      "subfield": "object_verification"
+    },
+    "44": {
+      "field": "ai_ml",
+      "subfield": "machine_learning_forecasting"
+    },
+    "47": {
+      "field": "ai_ml",
+      "subfield": "medical_image_classification"
+    },
+    "51": {
+      "field": "ai_ml",
+      "subfield": "neural_forecasting"
+    },
+    "54": {
+      "field": "ai_ml",
+      "subfield": "ai_diagnostics"
+    },
+    "67": {
+      "field": "ai_ml",
+      "subfield": "machine_learning_business_analytics"
+    },
+    "72": {
+      "field": "ai_ml",
+      "subfield": "clustering"
+    },
+    "83": {
+      "field": "ai_ml",
+      "subfield": "generative_adversarial_networks"
+    },
+    "89": {
+      "field": "ai_ml",
+      "subfield": "ml_security"
+    },
+    "2": {
+      "field": "nlp",
+      "subfield": "llm_text_detection"
+    },
+    "10": {
+      "field": "nlp",
+      "subfield": "phoneme_recognition"
+    },
+    "17": {
+      "field": "nlp",
+      "subfield": "term_extraction"
+    },
+    "19": {
+      "field": "nlp",
+      "subfield": "sentiment_and_emotion_analysis"
+    },
+    "23": {
+      "field": "nlp",
+      "subfield": "abstract_generation"
+    },
+    "32": {
+      "field": "nlp",
+      "subfield": "protein_language_models"
+    },
+    "39": {
+      "field": "nlp",
+      "subfield": "hybrid_text_retrieval"
+    },
+    "48": {
+      "field": "nlp",
+      "subfield": "sentiment_analysis"
+    },
+    "84": {
+      "field": "nlp",
+      "subfield": "semantic_text_analysis"
+    },
+    "92": {
+      "field": "nlp",
+      "subfield": "topic_modeling"
+    },
+    "94": {
+      "field": "nlp",
+      "subfield": "commit_message_generation"
+    },
+    "97": {
+      "field": "nlp",
+      "subfield": "speech_processing"
+    },
+    "98": {
+      "field": "nlp",
+      "subfield": "question_answering"
+    },
+    "4": {
+      "field": "computer_vision",
+      "subfield": "object_recognition"
+    },
+    "11": {
+      "field": "computer_vision",
+      "subfield": "signal_processing"
+    },
+    "12": {
+      "field": "computer_vision",
+      "subfield": "image_processing"
+    },
+    "14": {
+      "field": "computer_vision",
+      "subfield": "image_analysis"
+    },
+    "15": {
+      "field": "computer_vision",
+      "subfield": "aerial_image_restoration"
+    },
+    "20": {
+      "field": "computer_vision",
+      "subfield": "video_object_detection"
+    },
+    "85": {
+      "field": "computer_vision",
+      "subfield": "radio_image_recognition"
+    },
+    "8": {
+      "field": "information_systems",
+      "subfield": "social_media_information_retrieval"
+    },
+    "13": {
+      "field": "information_systems",
+      "subfield": "knowledge_graphs"
+    },
+    "18": {
+      "field": "information_systems",
+      "subfield": "decision_support_systems"
+    },
+    "27": {
+      "field": "information_systems",
+      "subfield": "trading_information_systems"
+    },
+    "33": {
+      "field": "information_systems",
+      "subfield": "ai_in_business"
+    },
+    "34": {
+      "field": "information_systems",
+      "subfield": "ai_personalization"
+    },
+    "36": {
+      "field": "information_systems",
+      "subfield": "business_intelligence"
+    },
+    "37": {
+      "field": "information_systems",
+      "subfield": "publication_management_systems"
+    },
+    "38": {
+      "field": "information_systems",
+      "subfield": "document_management"
+    },
+    "40": {
+      "field": "information_systems",
+      "subfield": "monitoring_information_systems"
+    },
+    "55": {
+      "field": "information_systems",
+      "subfield": "information_system_uncertainty"
+    },
+    "64": {
+      "field": "information_systems",
+      "subfield": "big_data_decision_support"
+    },
+    "66": {
+      "field": "information_systems",
+      "subfield": "knowledge_representation"
+    },
+    "78": {
+      "field": "information_systems",
+      "subfield": "multi_agent_systems"
+    },
+    "79": {
+      "field": "information_systems",
+      "subfield": "decision_support_analytics"
+    },
+    "86": {
+      "field": "information_systems",
+      "subfield": "medical_information_systems"
+    },
+    "95": {
+      "field": "information_systems",
+      "subfield": "ontological_modeling"
+    },
+    "96": {
+      "field": "information_systems",
+      "subfield": "information_system_integration"
+    },
+    "21": {
+      "field": "data_analysis",
+      "subfield": "remote_sensing_data_analysis"
+    },
+    "50": {
+      "field": "data_analysis",
+      "subfield": "dynamic_system_modeling"
+    },
+    "52": {
+      "field": "data_analysis",
+      "subfield": "markov_models"
+    },
+    "61": {
+      "field": "data_analysis",
+      "subfield": "mobile_object_management"
+    },
+    "63": {
+      "field": "data_analysis",
+      "subfield": "correlation_modeling"
+    },
+    "65": {
+      "field": "data_analysis",
+      "subfield": "statistical_data_analysis"
+    },
+    "68": {
+      "field": "data_analysis",
+      "subfield": "financial_data_analysis"
+    },
+    "74": {
+      "field": "data_analysis",
+      "subfield": "oceanographic_big_data"
+    },
+    "76": {
+      "field": "data_analysis",
+      "subfield": "sensitivity_analysis"
+    },
+    "87": {
+      "field": "data_analysis",
+      "subfield": "performance_risk_modeling"
+    },
+    "91": {
+      "field": "data_analysis",
+      "subfield": "cybersecurity_risk_modeling"
+    },
+    "25": {
+      "field": "software_engineering",
+      "subfield": "data_collection_software"
+    },
+    "41": {
+      "field": "software_engineering",
+      "subfield": "computer_architecture"
+    },
+    "42": {
+      "field": "software_engineering",
+      "subfield": "regression_testing"
+    },
+    "43": {
+      "field": "software_engineering",
+      "subfield": "software_architecture"
+    },
+    "49": {
+      "field": "software_engineering",
+      "subfield": "distributed_data_transmission"
+    },
+    "56": {
+      "field": "software_engineering",
+      "subfield": "monitoring_software"
+    },
+    "57": {
+      "field": "software_engineering",
+      "subfield": "programming_logic"
+    },
+    "69": {
+      "field": "software_engineering",
+      "subfield": "bim_systems"
+    },
+    "70": {
+      "field": "software_engineering",
+      "subfield": "multimedia_processing"
+    },
+    "71": {
+      "field": "software_engineering",
+      "subfield": "software_reliability"
+    },
+    "77": {
+      "field": "software_engineering",
+      "subfield": "data_warehouse_architecture"
+    },
+    "80": {
+      "field": "software_engineering",
+      "subfield": "iot_systems"
+    },
+    "81": {
+      "field": "software_engineering",
+      "subfield": "high_performance_computing"
+    },
+    "82": {
+      "field": "software_engineering",
+      "subfield": "data_processing_software"
+    },
+    "93": {
+      "field": "software_engineering",
+      "subfield": "server_architecture"
+    },
+    "99": {
+      "field": "software_engineering",
+      "subfield": "fpga_computing"
+    },
+    "100": {
+      "field": "software_engineering",
+      "subfield": "simulation_software"
+    },
+    "59": {
+      "field": "cybersecurity",
+      "subfield": "cyberattack_protection"
+    },
+    "75": {
+      "field": "cybersecurity",
+      "subfield": "steganography"
+    },
+    "88": {
+      "field": "cybersecurity",
+      "subfield": "cryptographic_verification"
+    },
+    "90": {
+      "field": "cybersecurity",
+      "subfield": "cyberattack_detection"
+    },
+    "24": {
+      "field": "applied_it",
+      "subfield": "educational_technologies"
+    },
+    "45": {
+      "field": "applied_it",
+      "subfield": "banking_digitalization"
+    },
+    "46": {
+      "field": "applied_it",
+      "subfield": "medical_ict"
+    },
+    "53": {
+      "field": "applied_it",
+      "subfield": "it_project_management"
+    },
+    "58": {
+      "field": "applied_it",
+      "subfield": "virtual_camera_technologies"
+    },
+    "60": {
+      "field": "applied_it",
+      "subfield": "business_strategy"
+    },
+    "62": {
+      "field": "applied_it",
+      "subfield": "banking_information_systems"
+    },
+    "73": {
+      "field": "applied_it",
+      "subfield": "lidar_autonomous_vehicles"
+    }
+  }
+}

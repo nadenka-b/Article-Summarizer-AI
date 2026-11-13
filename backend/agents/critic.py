@@ -27,7 +27,9 @@ class CriticAgent(Agent):
 
         prompt = self._build_prompt(summary, article_text, key_terms)
         try:
-            raw = await self._call_llm(prompt)
+            # Низкая температура: оценка критика должна быть стабильной
+            # при повторных прогонах (этап 8, тюнинг движка).
+            raw = await self._call_llm(prompt, temperature=0.1)
         except Exception as e:
             return self._fallback(state, f"LLM error: {e}")
 

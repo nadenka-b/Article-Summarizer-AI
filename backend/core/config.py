@@ -52,6 +52,17 @@ class Settings(BaseSettings):
     MAX_ARTICLE_LENGTH: int = Field(
         default=50000, validation_alias="MAX_ARTICLE_LENGTH"
     )
+    # Чанкинг (этап 8): текст длиннее SUMMARIZER_DIRECT_CHARS разбивается
+    # на чанки по предложениям с перекрытием:
+    SUMMARIZER_DIRECT_CHARS: int = Field(
+        default=6000, validation_alias="SUMMARIZER_DIRECT_CHARS"
+    )
+    CHUNK_SIZE_CHARS: int = Field(
+        default=3500, validation_alias="CHUNK_SIZE_CHARS"
+    )
+    CHUNK_OVERLAP_CHARS: int = Field(
+        default=300, validation_alias="CHUNK_OVERLAP_CHARS"
+    )
 
     # ========================================================================
     # Database
@@ -72,8 +83,18 @@ class Settings(BaseSettings):
         default="qwen2.5-7b-instruct-1m",
         validation_alias="LMSTUDIO_MODEL",
     )
+    # Таймаут одного вызова LLM (локальная генерация может быть медленной):
+    LLM_TIMEOUT_SECONDS: int = Field(
+        default=600, validation_alias="LLM_TIMEOUT_SECONDS"
+    )
+    # Верхний предел генерации — защита от «бесконечного размышления»
+    # thinking-моделей (6000 токенов ≈ 8 минут при 12 ток/с):
+    LLM_MAX_TOKENS: int = Field(
+        default=6000, validation_alias="LLM_MAX_TOKENS"
+    )
     # Необязательные переопределения модели для отдельных агентов
-    # (этап 8, тюнинг движка; None → LMSTUDIO_MODEL):
+    # (этап 8, тюнинг движка; None → LMSTUDIO_MODEL).
+    # Validator не указан: он rule-based и LLM не вызывает.
     SUMMARIZER_MODEL: Optional[str] = Field(
         default=None, validation_alias="SUMMARIZER_MODEL"
     )
@@ -82,9 +103,6 @@ class Settings(BaseSettings):
     )
     EDITOR_MODEL: Optional[str] = Field(
         default=None, validation_alias="EDITOR_MODEL"
-    )
-    VALIDATOR_MODEL: Optional[str] = Field(
-        default=None, validation_alias="VALIDATOR_MODEL"
     )
 
     # ========================================================================

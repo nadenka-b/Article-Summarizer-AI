@@ -25,7 +25,6 @@ class TestSettingsDefaults:
         assert s.SUMMARIZER_MODEL is None
         assert s.CRITIC_MODEL is None
         assert s.EDITOR_MODEL is None
-        assert s.VALIDATOR_MODEL is None
 
     def test_summary_mode_default(self):
         s = make_settings()

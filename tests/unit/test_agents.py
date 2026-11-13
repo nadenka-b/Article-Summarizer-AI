@@ -110,6 +110,58 @@ class TestSummarizer:
         assert result["summary"] == ""
         assert "summarizer_error" in result
 
+    async def test_direct_strategy_for_short_text(self, fake_llm):
+        fake_llm.default = SUMMARY_TEXT
+        s = SummarizerAgent()
+        result = await s.run({
+            "article_text": "Short article text. " * 10,
+            "summary_mode": "abstract",
+        })
+        assert result["summarizer_strategy"] == "direct"
+        assert result["chunks_count"] == 0
+        assert fake_llm.calls == 1  # один прямой вызов LLM
+
+    async def test_hierarchical_strategy_for_long_text(self, fake_llm):
+        """Длинная статья: чанки → резюме чанков → агрегация."""
+        long_text = (
+            "Это предложение длинной научной статьи про методы и результаты. "
+            * 300
+        )  # ~28k символов
+
+        def handler(prompt: str) -> str:
+            if "ЧАСТИЧНЫЕ РЕЗЮМЕ" in prompt:  # агрегация
+                return "Итоговая аннотация статьи, объединяющая все части."
+            if "ФРАГМЕНТА" in prompt:  # резюме чанка
+                return "Резюме фрагмента статьи."
+            raise AssertionError(f"Неожиданный промпт: {prompt[:60]}")
+
+        fake_llm.handler = handler
+        s = SummarizerAgent()
+        result = await s.run({
+            "article_text": long_text,
+            "summary_mode": "abstract",
+        })
+
+        assert result["summarizer_strategy"] == "hierarchical"
+        assert result["chunks_count"] > 1
+        assert result["summary"] == "Итоговая аннотация статьи, объединяющая все части."
+        # Вызовы: по одному на чанк + одна агрегация
+        assert fake_llm.calls == result["chunks_count"] + 1
+
+    async def test_few_shot_examples_reach_prompt(self, fake_llm):
+        """Few-shot примеры из RAG попадают в промпт (этап 9)."""
+        fake_llm.default = SUMMARY_TEXT
+        s = SummarizerAgent()
+        result = await s.run({
+            "article_text": "Article text. " * 20,
+            "summary_mode": "abstract",
+            "few_shot_examples": "ПРИМЕР: эталонная аннотация похожей статьи.",
+        })
+        assert result["summary"]
+        assert any(
+            "эталонная аннотация похожей статьи" in p for p in fake_llm.prompts
+        )
+
 
 # ============================================================================
 # Validator
