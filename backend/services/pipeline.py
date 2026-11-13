@@ -47,6 +47,10 @@ _summarization_semaphore = asyncio.Semaphore(4)
 
 ARXIV_PDF_URL = "https://arxiv.org/pdf/{arxiv_id}.pdf"
 ARXIV_ABS_URL = "https://arxiv.org/abs/{arxiv_id}"
+# arXiv отклоняет запросы с дефолтным User-Agent httpx — идентифицируемся.
+ARXIV_HEADERS = {
+    "User-Agent": "Article-Summarizer-AI/0.1 (research project; local use)"
+}
 
 
 @dataclass
@@ -75,7 +79,9 @@ class SummarizationResult:
 async def fetch_arxiv_pdf(arxiv_id: str) -> bytes:
     """Скачивает PDF статьи с arXiv по идентификатору."""
     url = ARXIV_PDF_URL.format(arxiv_id=arxiv_id)
-    async with httpx.AsyncClient(timeout=60.0, follow_redirects=True) as client:
+    async with httpx.AsyncClient(
+        timeout=60.0, follow_redirects=True, headers=ARXIV_HEADERS
+    ) as client:
         response = await client.get(url)
         response.raise_for_status()
         content_type = response.headers.get("content-type", "")

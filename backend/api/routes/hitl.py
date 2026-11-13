@@ -136,6 +136,20 @@ async def confirm_example(
         )
 
     kb_inserted = outcome["kb_inserted"]
+
+    # После подтверждения — фоновая переиндексация RAG (этап 11).
+    # Redis недоступен → warning, подтверждение это не ломает.
+    if kb_inserted:
+        try:
+            from backend.worker.tasks import reindex_knowledge_base
+
+            reindex_knowledge_base.delay()
+        except Exception as e:
+            logger.warning(
+                "Не удалось поставить задачу переиндексации "
+                "(Redis недоступен?): %s", e,
+            )
+
     return HITLReviewResponse(
         id=example_id,
         status="confirmed",

@@ -44,6 +44,70 @@ summaries_router = APIRouter(prefix="/summaries", tags=["summarize"])
 MAX_PDF_SIZE = 20 * 1024 * 1024  # 20 МБ
 
 
+# ============================================================================
+# POST /summarize/async — фоновая суммаризация через Celery (этап 11)
+# ============================================================================
+@router.post(
+    "/summarize/async",
+    summary="Фоновая суммаризация (Celery); возвращает task_id",
+    status_code=status.HTTP_202_ACCEPTED,
+)
+async def summarize_async(
+    payload: SummarizeTextRequest,
+    user: User = Depends(get_current_user),
+) -> dict:
+    try:
+        from backend.worker.tasks import summarize as summarize_task
+
+        task = summarize_task.delay(
+            user_id=str(user.id),
+            article_text=payload.text,
+            mode=payload.mode,
+            summary_mode=payload.summary_mode,
+            title=payload.title,
+            field=payload.field,
+            use_cache=payload.use_cache,
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"Очередь задач недоступна (Redis/Celery): {e}",
+        )
+
+    return {"task_id": task.id, "status": "queued"}
+
+
+# ============================================================================
+# GET /tasks/{task_id} — статус фоновой задачи
+# ============================================================================
+@router.get(
+    "/tasks/{task_id}",
+    summary="Статус фоновой задачи суммаризации",
+)
+async def get_task_status(
+    task_id: str,
+    user: User = Depends(get_current_user),
+) -> dict:
+    try:
+        from celery.result import AsyncResult
+
+        result = AsyncResult(task_id)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"Бэкенд задач недоступен (Redis/Celery): {e}",
+        )
+
+    response = {"task_id": task_id, "status": result.status}
+
+    if result.successful():
+        response["result"] = result.result
+    elif result.failed():
+        response["error"] = str(result.result)
+
+    return response
+
+
 def _to_response(result) -> SummaryResponse:
     return SummaryResponse(**asdict(result))
 

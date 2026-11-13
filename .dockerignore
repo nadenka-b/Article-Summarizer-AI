@@ -27,6 +27,13 @@ summarizer.db
 *.sqlite
 *.sqlite3
 
+# Corpus (воспроизводится скриптами импорта; PDF не коммитятся)
+data/
+
+# UI и тесты не нужны в образе API/worker
+streamlit_app/
+tests/
+
 # Env
 .env
 

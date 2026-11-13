@@ -42,17 +42,90 @@ services:
       PROJECT_NAME: Article-Summarizer-AI
       # LM Studio запущен на хосте, из контейнера доступен через host.docker.internal
       LMSTUDIO_URL: http://host.docker.internal:1234/v1
-      LMSTUDIO_MODEL: qwen2.5-7b-instruct-1m
+      LMSTUDIO_MODEL: qwen2.5-7b-instruct
+      REDIS_URL: redis://redis:6379/0
     extra_hosts:
       - "host.docker.internal:host-gateway"   # для Linux (на Windows/macOS не мешает)
     volumes:
       - ../backend:/app/backend    # для hot-reload в dev
       - ../logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     depends_on:
       db:
         condition: service_healthy
       qdrant:
         condition: service_healthy
+      redis:
+        condition: service_started
+
+  # ============================================================================
+  # Redis (брокер Celery + бэкенд результатов задач)
+  # ============================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: summarizer_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - summarizer_net
+
+  # ============================================================================
+  # Celery worker (фоновая суммаризация и переиндексация)
+  # ============================================================================
+  worker:
+    build:
+      context: ..
+      dockerfile: infrastructure/Dockerfile
+    container_name: summarizer_worker
+    restart: unless-stopped
+    command: celery -A backend.worker.celery_app worker --loglevel=info --concurrency=2
+    environment:
+      DATABASE_URL: postgresql://summarizer_user:summarizer_password@db:5432/summarizer_db
+      DEBUG: "true"
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: "6333"
+      LMSTUDIO_URL: http://host.docker.internal:1234/v1
+      LMSTUDIO_MODEL: qwen2.5-7b-instruct
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ../backend:/app/backend
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - summarizer_net
+
+  # ============================================================================
+  # Nginx (реверс-прокси API, этап 12)
+  # ============================================================================
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: summarizer_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - summarizer_net
 
   # ============================================================================
   # Qdrant (векторная БД для гибридного RAG)
@@ -72,14 +145,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-    networks:
-      - summarizer_net
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
     networks:
       - summarizer_net
 
