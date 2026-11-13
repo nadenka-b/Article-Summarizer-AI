@@ -1,7 +1,7 @@
 {
   "version": 1,
   "description": "Предварительная тематическая классификация научных статей корпуса Article-Summarizer-AI.",
-  "classification_basis": "Названия и метаданные реестра; категории требуют уточнения при необходимости по полному тексту.",
+  "classification_basis": "Предварительная тематическая классификация корпуса Article-Summarizer-AI по названиям и метаданным статей: сильные ключевые слова → журнал → ключевые слова внутри поля. Требует уточнения по полным текстам.",
   "categories": {
     "ai_ml": "Искусственный интеллект и машинное обучение",
     "nlp": "Обработка естественного языка и анализ текста",
@@ -10,7 +10,17 @@
     "data_analysis": "Анализ данных и математическое моделирование",
     "software_engineering": "Программная инженерия и вычислительные системы",
     "cybersecurity": "Информационная безопасность и криптография",
-    "applied_it": "Прикладные информационные технологии, экономика и управление"
+    "applied_it": "Прикладные информационные технологии, экономика и управление",
+    "social_sciences": "Социально-экономические, правовые и общественные науки",
+    "education": "Педагогика и образование",
+    "psychology": "Психологические науки и психология образования",
+    "philology": "Литературоведение и филология",
+    "medicine": "Медицина и медико-биологические науки",
+    "biology": "Биологические науки",
+    "geology": "Науки о Земле (геология, география, геоэкология)",
+    "mining_engineering": "Горное дело и геотехнологии",
+    "engineering": "Технические науки и инженерия",
+    "other": "Прочее (требует ручной классификации)"
   },
   "articles": {
     "1": {
@@ -412,6 +422,3678 @@
     "73": {
       "field": "applied_it",
       "subfield": "lidar_autonomous_vehicles"
+    },
+    "131": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "132": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "133": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "134": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "135": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "136": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "137": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "138": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "139": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "140": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "141": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "142": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "143": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "144": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "145": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "146": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "147": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "148": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "149": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "150": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "151": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "152": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "153": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "154": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "155": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "156": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "157": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "158": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "159": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "160": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "161": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "162": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "163": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "164": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "165": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "166": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "167": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "168": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "169": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "170": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "171": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "172": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "173": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "174": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "175": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "176": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "177": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "178": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "179": {
+      "field": "social_sciences",
+      "subfield": "law"
+    },
+    "180": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "181": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "182": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "183": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "184": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "185": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "186": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "187": {
+      "field": "social_sciences",
+      "subfield": "philosophy"
+    },
+    "188": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "189": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "190": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "191": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "192": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "193": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "194": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "195": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "196": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "197": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "198": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "199": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "200": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "201": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "202": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "203": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "204": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "205": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "206": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "207": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "208": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "209": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "210": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "211": {
+      "field": "education",
+      "subfield": "history_of_science"
+    },
+    "212": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "213": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "214": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "215": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "216": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "217": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "218": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "219": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "220": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "221": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "222": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "223": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "224": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "225": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "226": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "227": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "228": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "229": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "230": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "231": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "232": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "233": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "234": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "235": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "236": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "237": {
+      "field": "medicine",
+      "subfield": "orthopedics"
+    },
+    "238": {
+      "field": "medicine",
+      "subfield": "pulmonology"
+    },
+    "239": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "240": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "241": {
+      "field": "medicine",
+      "subfield": "hematology"
+    },
+    "242": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "243": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "244": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "245": {
+      "field": "education",
+      "subfield": "stem_education"
+    },
+    "246": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "247": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "248": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "249": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "250": {
+      "field": "psychology",
+      "subfield": "clinical_psychology"
+    },
+    "251": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "252": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "253": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "254": {
+      "field": "medicine",
+      "subfield": "forensic_medicine"
+    },
+    "255": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "256": {
+      "field": "medicine",
+      "subfield": "dentistry"
+    },
+    "257": {
+      "field": "education",
+      "subfield": "general"
+    },
+    "258": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "259": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "260": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "261": {
+      "field": "medicine",
+      "subfield": "gastroenterology"
+    },
+    "262": {
+      "field": "medicine",
+      "subfield": "ophthalmology"
+    },
+    "263": {
+      "field": "education",
+      "subfield": "general"
+    },
+    "264": {
+      "field": "education",
+      "subfield": "general"
+    },
+    "265": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "266": {
+      "field": "education",
+      "subfield": "language_teaching"
+    },
+    "267": {
+      "field": "education",
+      "subfield": "teaching_methods"
+    },
+    "268": {
+      "field": "education",
+      "subfield": "competence_education"
+    },
+    "269": {
+      "field": "education",
+      "subfield": "history_of_science"
+    },
+    "270": {
+      "field": "medicine",
+      "subfield": "dentistry"
+    },
+    "271": {
+      "field": "social_sciences",
+      "subfield": "public_administration"
+    },
+    "272": {
+      "field": "medicine",
+      "subfield": "physiology"
+    },
+    "273": {
+      "field": "education",
+      "subfield": "history_of_science"
+    },
+    "274": {
+      "field": "mining_engineering",
+      "subfield": "occupational_safety"
+    },
+    "275": {
+      "field": "education",
+      "subfield": "competence_education"
+    },
+    "276": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "277": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "278": {
+      "field": "medicine",
+      "subfield": "dermatology"
+    },
+    "279": {
+      "field": "medicine",
+      "subfield": "surgery"
+    },
+    "280": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "281": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "282": {
+      "field": "medicine",
+      "subfield": "dermatology"
+    },
+    "283": {
+      "field": "medicine",
+      "subfield": "diagnostics"
+    },
+    "284": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "285": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "286": {
+      "field": "medicine",
+      "subfield": "rheumatology"
+    },
+    "287": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "288": {
+      "field": "medicine",
+      "subfield": "surgery"
+    },
+    "289": {
+      "field": "medicine",
+      "subfield": "ophthalmology"
+    },
+    "290": {
+      "field": "medicine",
+      "subfield": "anesthesiology"
+    },
+    "291": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "292": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "293": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "294": {
+      "field": "medicine",
+      "subfield": "ent"
+    },
+    "295": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "296": {
+      "field": "medicine",
+      "subfield": "hematology"
+    },
+    "297": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "298": {
+      "field": "medicine",
+      "subfield": "gastroenterology"
+    },
+    "299": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "300": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "301": {
+      "field": "engineering",
+      "subfield": "mechanical_engineering"
+    },
+    "302": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "303": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "304": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "305": {
+      "field": "medicine",
+      "subfield": "diagnostics"
+    },
+    "306": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "307": {
+      "field": "education",
+      "subfield": "general"
+    },
+    "308": {
+      "field": "education",
+      "subfield": "general"
+    },
+    "309": {
+      "field": "medicine",
+      "subfield": "gastroenterology"
+    },
+    "310": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "311": {
+      "field": "education",
+      "subfield": "general"
+    },
+    "312": {
+      "field": "medicine",
+      "subfield": "forensic_medicine"
+    },
+    "313": {
+      "field": "medicine",
+      "subfield": "cardiology"
+    },
+    "314": {
+      "field": "medicine",
+      "subfield": "pulmonology"
+    },
+    "315": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "316": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "317": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "318": {
+      "field": "education",
+      "subfield": "general"
+    },
+    "319": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "320": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "321": {
+      "field": "medicine",
+      "subfield": "gynecology"
+    },
+    "322": {
+      "field": "medicine",
+      "subfield": "pulmonology"
+    },
+    "323": {
+      "field": "medicine",
+      "subfield": "diagnostics"
+    },
+    "324": {
+      "field": "medicine",
+      "subfield": "gynecology"
+    },
+    "325": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "326": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "327": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "328": {
+      "field": "education",
+      "subfield": "digital_education"
+    },
+    "329": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "330": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "331": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "332": {
+      "field": "education",
+      "subfield": "digital_education"
+    },
+    "333": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "334": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "335": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "336": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "337": {
+      "field": "psychology",
+      "subfield": "developmental_psychology"
+    },
+    "338": {
+      "field": "psychology",
+      "subfield": "self_regulation"
+    },
+    "339": {
+      "field": "psychology",
+      "subfield": "cognitive_psychology"
+    },
+    "340": {
+      "field": "psychology",
+      "subfield": "personality_psychology"
+    },
+    "341": {
+      "field": "psychology",
+      "subfield": "occupational_psychology"
+    },
+    "342": {
+      "field": "psychology",
+      "subfield": "cognitive_psychology"
+    },
+    "343": {
+      "field": "psychology",
+      "subfield": "cognitive_psychology"
+    },
+    "344": {
+      "field": "psychology",
+      "subfield": "cyberpsychology"
+    },
+    "345": {
+      "field": "psychology",
+      "subfield": "wellbeing"
+    },
+    "346": {
+      "field": "psychology",
+      "subfield": "developmental_psychology"
+    },
+    "347": {
+      "field": "psychology",
+      "subfield": "personality_psychology"
+    },
+    "348": {
+      "field": "psychology",
+      "subfield": "educational_psychology"
+    },
+    "349": {
+      "field": "psychology",
+      "subfield": "social_psychology"
+    },
+    "350": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "352": {
+      "field": "psychology",
+      "subfield": "developmental_psychology"
+    },
+    "353": {
+      "field": "psychology",
+      "subfield": "developmental_psychology"
+    },
+    "354": {
+      "field": "psychology",
+      "subfield": "developmental_psychology"
+    },
+    "355": {
+      "field": "psychology",
+      "subfield": "cognitive_psychology"
+    },
+    "356": {
+      "field": "psychology",
+      "subfield": "developmental_psychology"
+    },
+    "357": {
+      "field": "psychology",
+      "subfield": "family_psychology"
+    },
+    "358": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "359": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "360": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "361": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "362": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "363": {
+      "field": "psychology",
+      "subfield": "educational_psychology"
+    },
+    "364": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "365": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "366": {
+      "field": "psychology",
+      "subfield": "wellbeing"
+    },
+    "367": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "368": {
+      "field": "psychology",
+      "subfield": "educational_psychology"
+    },
+    "369": {
+      "field": "psychology",
+      "subfield": "occupational_psychology"
+    },
+    "370": {
+      "field": "psychology",
+      "subfield": "wellbeing"
+    },
+    "372": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "373": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "374": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "375": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "376": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "377": {
+      "field": "psychology",
+      "subfield": "cyberpsychology"
+    },
+    "378": {
+      "field": "psychology",
+      "subfield": "cyberpsychology"
+    },
+    "379": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "380": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "381": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "382": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "383": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "384": {
+      "field": "psychology",
+      "subfield": "general"
+    },
+    "385": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "386": {
+      "field": "psychology",
+      "subfield": "digital_psychology"
+    },
+    "387": {
+      "field": "psychology",
+      "subfield": "cyberpsychology"
+    },
+    "388": {
+      "field": "psychology",
+      "subfield": "educational_psychology"
+    },
+    "389": {
+      "field": "psychology",
+      "subfield": "developmental_psychology"
+    },
+    "390": {
+      "field": "psychology",
+      "subfield": "cognitive_psychology"
+    },
+    "391": {
+      "field": "psychology",
+      "subfield": "self_regulation"
+    },
+    "448": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "449": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "450": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "451": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "452": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "453": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "454": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "455": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "456": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "457": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "458": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "459": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "460": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "461": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "462": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "463": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "464": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "465": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "466": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "467": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "468": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "469": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "470": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "471": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "472": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "473": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "474": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "475": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "476": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "477": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "478": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "479": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "480": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "481": {
+      "field": "philology",
+      "subfield": "russian_classical_literature"
+    },
+    "516": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "517": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "518": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "519": {
+      "field": "medicine",
+      "subfield": "cardiology"
+    },
+    "520": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "521": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "522": {
+      "field": "medicine",
+      "subfield": "epidemiology"
+    },
+    "523": {
+      "field": "medicine",
+      "subfield": "hematology"
+    },
+    "524": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "525": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "526": {
+      "field": "medicine",
+      "subfield": "microbiology"
+    },
+    "527": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "528": {
+      "field": "medicine",
+      "subfield": "neurology"
+    },
+    "529": {
+      "field": "medicine",
+      "subfield": "neurology"
+    },
+    "530": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "531": {
+      "field": "medicine",
+      "subfield": "microbiology"
+    },
+    "532": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "533": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "534": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "535": {
+      "field": "medicine",
+      "subfield": "immunology"
+    },
+    "536": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "537": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "538": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "539": {
+      "field": "medicine",
+      "subfield": "hematology"
+    },
+    "540": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "541": {
+      "field": "medicine",
+      "subfield": "diagnostics"
+    },
+    "542": {
+      "field": "medicine",
+      "subfield": "neurology"
+    },
+    "543": {
+      "field": "medicine",
+      "subfield": "gynecology"
+    },
+    "544": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "545": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "546": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "547": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "548": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "549": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "550": {
+      "field": "medicine",
+      "subfield": "physiology"
+    },
+    "551": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "552": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "553": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "554": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "555": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "556": {
+      "field": "medicine",
+      "subfield": "dentistry"
+    },
+    "557": {
+      "field": "medicine",
+      "subfield": "orthopedics"
+    },
+    "558": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "559": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "560": {
+      "field": "medicine",
+      "subfield": "cardiology"
+    },
+    "561": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "562": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "563": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "564": {
+      "field": "medicine",
+      "subfield": "epidemiology"
+    },
+    "565": {
+      "field": "medicine",
+      "subfield": "gynecology"
+    },
+    "566": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "567": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "568": {
+      "field": "medicine",
+      "subfield": "gastroenterology"
+    },
+    "569": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "570": {
+      "field": "medicine",
+      "subfield": "diagnostics"
+    },
+    "571": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "572": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "573": {
+      "field": "medicine",
+      "subfield": "dermatology"
+    },
+    "574": {
+      "field": "medicine",
+      "subfield": "orthopedics"
+    },
+    "575": {
+      "field": "medicine",
+      "subfield": "immunology"
+    },
+    "576": {
+      "field": "medicine",
+      "subfield": "pulmonology"
+    },
+    "577": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "578": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "579": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "580": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "581": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "582": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "583": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "584": {
+      "field": "medicine",
+      "subfield": "physiology"
+    },
+    "585": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "586": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "587": {
+      "field": "medicine",
+      "subfield": "gastroenterology"
+    },
+    "588": {
+      "field": "medicine",
+      "subfield": "hematology"
+    },
+    "589": {
+      "field": "medicine",
+      "subfield": "diagnostics"
+    },
+    "590": {
+      "field": "medicine",
+      "subfield": "pulmonology"
+    },
+    "591": {
+      "field": "medicine",
+      "subfield": "hematology"
+    },
+    "592": {
+      "field": "medicine",
+      "subfield": "cardiology"
+    },
+    "593": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "594": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "595": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "596": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "597": {
+      "field": "medicine",
+      "subfield": "physiology"
+    },
+    "598": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "599": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "600": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "601": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "602": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "603": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "604": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "605": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "606": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "607": {
+      "field": "medicine",
+      "subfield": "neurology"
+    },
+    "608": {
+      "field": "medicine",
+      "subfield": "neurology"
+    },
+    "609": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "610": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "611": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "612": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "613": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "614": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "615": {
+      "field": "medicine",
+      "subfield": "pulmonology"
+    },
+    "616": {
+      "field": "medicine",
+      "subfield": "rehabilitation"
+    },
+    "617": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "618": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "619": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "620": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "621": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "622": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "623": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "624": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "625": {
+      "field": "medicine",
+      "subfield": "neurology"
+    },
+    "626": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "627": {
+      "field": "medicine",
+      "subfield": "hematology"
+    },
+    "628": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "629": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "630": {
+      "field": "medicine",
+      "subfield": "cardiology"
+    },
+    "631": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "632": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "633": {
+      "field": "medicine",
+      "subfield": "cardiology"
+    },
+    "634": {
+      "field": "medicine",
+      "subfield": "infectious_diseases"
+    },
+    "635": {
+      "field": "medicine",
+      "subfield": "oncology"
+    },
+    "636": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "637": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "638": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "639": {
+      "field": "medicine",
+      "subfield": "pulmonology"
+    },
+    "640": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "641": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "642": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "643": {
+      "field": "medicine",
+      "subfield": "general"
+    },
+    "644": {
+      "field": "medicine",
+      "subfield": "general_medicine"
+    },
+    "645": {
+      "field": "biology",
+      "subfield": "zoology"
+    },
+    "646": {
+      "field": "biology",
+      "subfield": "zoology"
+    },
+    "647": {
+      "field": "biology",
+      "subfield": "soil_science"
+    },
+    "648": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "649": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "650": {
+      "field": "biology",
+      "subfield": "zoology"
+    },
+    "651": {
+      "field": "biology",
+      "subfield": "zoology"
+    },
+    "652": {
+      "field": "biology",
+      "subfield": "zoology"
+    },
+    "653": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "654": {
+      "field": "biology",
+      "subfield": "genetics"
+    },
+    "655": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "656": {
+      "field": "biology",
+      "subfield": "botany"
+    },
+    "657": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "658": {
+      "field": "biology",
+      "subfield": "botany"
+    },
+    "659": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "660": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "661": {
+      "field": "biology",
+      "subfield": "ecology"
+    },
+    "662": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "663": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "664": {
+      "field": "biology",
+      "subfield": "hydrobiology"
+    },
+    "665": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "666": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "667": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "668": {
+      "field": "biology",
+      "subfield": "molecular_biology"
+    },
+    "669": {
+      "field": "biology",
+      "subfield": "hydrobiology"
+    },
+    "670": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "671": {
+      "field": "biology",
+      "subfield": "ecology"
+    },
+    "672": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "673": {
+      "field": "biology",
+      "subfield": "molecular_biology"
+    },
+    "674": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "675": {
+      "field": "biology",
+      "subfield": "hydrobiology"
+    },
+    "676": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "677": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "678": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "679": {
+      "field": "biology",
+      "subfield": "zoology"
+    },
+    "680": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "681": {
+      "field": "biology",
+      "subfield": "botany"
+    },
+    "682": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "683": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "684": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "685": {
+      "field": "biology",
+      "subfield": "ecology"
+    },
+    "686": {
+      "field": "biology",
+      "subfield": "botany"
+    },
+    "687": {
+      "field": "biology",
+      "subfield": "biochemistry"
+    },
+    "688": {
+      "field": "biology",
+      "subfield": "general"
+    },
+    "689": {
+      "field": "biology",
+      "subfield": "ecology"
+    },
+    "690": {
+      "field": "engineering",
+      "subfield": "virtual_instrumenting"
+    },
+    "691": {
+      "field": "biology",
+      "subfield": "environmental_chemistry"
+    },
+    "692": {
+      "field": "engineering",
+      "subfield": "manufacturing"
+    },
+    "693": {
+      "field": "engineering",
+      "subfield": "manufacturing"
+    },
+    "694": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "695": {
+      "field": "software_engineering",
+      "subfield": "recommender_systems"
+    },
+    "696": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "697": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "698": {
+      "field": "mining_engineering",
+      "subfield": "coal_mining"
+    },
+    "699": {
+      "field": "medicine",
+      "subfield": "clinical_medicine"
+    },
+    "700": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "701": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "702": {
+      "field": "medicine",
+      "subfield": "pediatrics"
+    },
+    "703": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "704": {
+      "field": "education",
+      "subfield": "stem_education"
+    },
+    "705": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "706": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "707": {
+      "field": "education",
+      "subfield": "competence_education"
+    },
+    "708": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "709": {
+      "field": "medicine",
+      "subfield": "diagnostics"
+    },
+    "710": {
+      "field": "psychology",
+      "subfield": "social_psychology"
+    },
+    "711": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "712": {
+      "field": "education",
+      "subfield": "digital_education"
+    },
+    "713": {
+      "field": "geology",
+      "subfield": "geophysics"
+    },
+    "714": {
+      "field": "engineering",
+      "subfield": "manufacturing"
+    },
+    "715": {
+      "field": "engineering",
+      "subfield": "intelligent_systems"
+    },
+    "716": {
+      "field": "psychology",
+      "subfield": "cognitive_psychology"
+    },
+    "717": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "718": {
+      "field": "engineering",
+      "subfield": "supply_chain"
+    },
+    "719": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "720": {
+      "field": "ai_ml",
+      "subfield": "neural_networks"
+    },
+    "721": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "722": {
+      "field": "engineering",
+      "subfield": "automation"
+    },
+    "723": {
+      "field": "ai_ml",
+      "subfield": "machine_learning"
+    },
+    "724": {
+      "field": "education",
+      "subfield": "digital_education"
+    },
+    "725": {
+      "field": "education",
+      "subfield": "teaching_methods"
+    },
+    "726": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "727": {
+      "field": "ai_ml",
+      "subfield": "neural_networks"
+    },
+    "728": {
+      "field": "education",
+      "subfield": "language_teaching"
+    },
+    "729": {
+      "field": "education",
+      "subfield": "digital_education"
+    },
+    "730": {
+      "field": "education",
+      "subfield": "competence_education"
+    },
+    "731": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "732": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "733": {
+      "field": "mining_engineering",
+      "subfield": "environmental_engineering"
+    },
+    "734": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "735": {
+      "field": "psychology",
+      "subfield": "cognitive_psychology"
+    },
+    "736": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "737": {
+      "field": "education",
+      "subfield": "digital_education"
+    },
+    "738": {
+      "field": "education",
+      "subfield": "school_education"
+    },
+    "739": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "740": {
+      "field": "psychology",
+      "subfield": "occupational_psychology"
+    },
+    "741": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "742": {
+      "field": "education",
+      "subfield": "stem_education"
+    },
+    "743": {
+      "field": "education",
+      "subfield": "engineering_education"
+    },
+    "744": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "745": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "746": {
+      "field": "mining_engineering",
+      "subfield": "environmental_engineering"
+    },
+    "747": {
+      "field": "engineering",
+      "subfield": "manufacturing"
+    },
+    "748": {
+      "field": "engineering",
+      "subfield": "automation"
+    },
+    "749": {
+      "field": "education",
+      "subfield": "teaching_methods"
+    },
+    "750": {
+      "field": "education",
+      "subfield": "stem_education"
+    },
+    "751": {
+      "field": "engineering",
+      "subfield": "intelligent_systems"
+    },
+    "752": {
+      "field": "education",
+      "subfield": "digital_education"
+    },
+    "753": {
+      "field": "engineering",
+      "subfield": "mechanical_engineering"
+    },
+    "754": {
+      "field": "engineering",
+      "subfield": "automation"
+    },
+    "755": {
+      "field": "engineering",
+      "subfield": "mechanical_engineering"
+    },
+    "756": {
+      "field": "engineering",
+      "subfield": "electrical_engineering"
+    },
+    "757": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "758": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "759": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "760": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "761": {
+      "field": "nlp",
+      "subfield": "llm"
+    },
+    "762": {
+      "field": "education",
+      "subfield": "pedagogy"
+    },
+    "763": {
+      "field": "ai_ml",
+      "subfield": "ai_applications"
+    },
+    "764": {
+      "field": "education",
+      "subfield": "school_education"
+    },
+    "765": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "766": {
+      "field": "education",
+      "subfield": "engineering_education"
+    },
+    "767": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "768": {
+      "field": "medicine",
+      "subfield": "cardiology"
+    },
+    "769": {
+      "field": "education",
+      "subfield": "higher_education"
+    },
+    "770": {
+      "field": "engineering",
+      "subfield": "general_engineering"
+    },
+    "771": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "772": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "773": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "774": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "775": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "776": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "777": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "778": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "779": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "780": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "781": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "782": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "783": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "784": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "785": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "786": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "787": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "788": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "789": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "790": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "791": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "792": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "793": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "794": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "795": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "796": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "797": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "798": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "799": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "800": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "801": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "802": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "803": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "804": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "805": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "806": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "807": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "808": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "809": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "810": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "811": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "812": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "813": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "814": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "815": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "816": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "817": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "818": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "819": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "820": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "821": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "822": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "823": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "824": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "825": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "826": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "827": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "828": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "829": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "830": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "831": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "832": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "833": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "834": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "835": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "836": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "837": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "838": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "839": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "840": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "841": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "842": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "843": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "844": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "845": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "846": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "847": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "848": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "849": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "850": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "851": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "852": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "853": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "854": {
+      "field": "medicine",
+      "subfield": "endocrinology"
+    },
+    "855": {
+      "field": "mining_engineering",
+      "subfield": "industrial_waste"
+    },
+    "856": {
+      "field": "mining_engineering",
+      "subfield": "industrial_waste"
+    },
+    "857": {
+      "field": "mining_engineering",
+      "subfield": "petroleum_engineering"
+    },
+    "858": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "859": {
+      "field": "mining_engineering",
+      "subfield": "backfilling"
+    },
+    "860": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "861": {
+      "field": "mining_engineering",
+      "subfield": "industrial_waste"
+    },
+    "862": {
+      "field": "mining_engineering",
+      "subfield": "drilling"
+    },
+    "863": {
+      "field": "mining_engineering",
+      "subfield": "petroleum_engineering"
+    },
+    "864": {
+      "field": "mining_engineering",
+      "subfield": "petroleum_engineering"
+    },
+    "865": {
+      "field": "mining_engineering",
+      "subfield": "environmental_reclamation"
+    },
+    "866": {
+      "field": "mining_engineering",
+      "subfield": "mineral_processing"
+    },
+    "867": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "868": {
+      "field": "mining_engineering",
+      "subfield": "industrial_waste"
+    },
+    "869": {
+      "field": "mining_engineering",
+      "subfield": "petroleum_engineering"
+    },
+    "870": {
+      "field": "mining_engineering",
+      "subfield": "petroleum_engineering"
+    },
+    "871": {
+      "field": "mining_engineering",
+      "subfield": "industrial_waste"
+    },
+    "872": {
+      "field": "mining_engineering",
+      "subfield": "environmental_reclamation"
+    },
+    "873": {
+      "field": "mining_engineering",
+      "subfield": "environmental_reclamation"
+    },
+    "874": {
+      "field": "mining_engineering",
+      "subfield": "industrial_waste"
+    },
+    "875": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "876": {
+      "field": "geology",
+      "subfield": "geochemistry"
+    },
+    "877": {
+      "field": "mining_engineering",
+      "subfield": "environmental_reclamation"
+    },
+    "878": {
+      "field": "mining_engineering",
+      "subfield": "industrial_waste"
+    },
+    "879": {
+      "field": "mining_engineering",
+      "subfield": "industrial_waste"
+    },
+    "880": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "881": {
+      "field": "geology",
+      "subfield": "mineralogy"
+    },
+    "882": {
+      "field": "mining_engineering",
+      "subfield": "drilling"
+    },
+    "883": {
+      "field": "mining_engineering",
+      "subfield": "drilling"
+    },
+    "884": {
+      "field": "geology",
+      "subfield": "sedimentology"
+    },
+    "885": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "886": {
+      "field": "geology",
+      "subfield": "mineralogy"
+    },
+    "887": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "888": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "889": {
+      "field": "geology",
+      "subfield": "meteoritics"
+    },
+    "890": {
+      "field": "mining_engineering",
+      "subfield": "petroleum_engineering"
+    },
+    "891": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "892": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "893": {
+      "field": "mining_engineering",
+      "subfield": "petroleum_engineering"
+    },
+    "894": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "895": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "896": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "897": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "898": {
+      "field": "geology",
+      "subfield": "petrography"
+    },
+    "899": {
+      "field": "mining_engineering",
+      "subfield": "mine_power"
+    },
+    "900": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "901": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "902": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "903": {
+      "field": "geology",
+      "subfield": "sedimentology"
+    },
+    "904": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "905": {
+      "field": "mining_engineering",
+      "subfield": "open_pit_mining"
+    },
+    "906": {
+      "field": "mining_engineering",
+      "subfield": "general"
+    },
+    "907": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "908": {
+      "field": "geology",
+      "subfield": "paleontology"
+    },
+    "909": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "910": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "911": {
+      "field": "geology",
+      "subfield": "mineralogy"
+    },
+    "912": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "913": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "914": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "915": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "916": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "917": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "918": {
+      "field": "geology",
+      "subfield": "mineralogy"
+    },
+    "919": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "920": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "921": {
+      "field": "geology",
+      "subfield": "tectonics"
+    },
+    "922": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "923": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "924": {
+      "field": "geology",
+      "subfield": "paleontology"
+    },
+    "925": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "926": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "927": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "928": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "929": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "930": {
+      "field": "geology",
+      "subfield": "mineralogy"
+    },
+    "931": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "932": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "933": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "934": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "935": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "936": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "937": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "938": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "939": {
+      "field": "geology",
+      "subfield": "paleontology"
+    },
+    "940": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "941": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "942": {
+      "field": "geology",
+      "subfield": "sedimentology"
+    },
+    "943": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "944": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "945": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "946": {
+      "field": "geology",
+      "subfield": "paleontology"
+    },
+    "947": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "948": {
+      "field": "geology",
+      "subfield": "regional_geology"
+    },
+    "949": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "950": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "951": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "952": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "953": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "954": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "955": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "956": {
+      "field": "geology",
+      "subfield": "tectonics"
+    },
+    "957": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "958": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "959": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "960": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "961": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "962": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "963": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "964": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "965": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "966": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "967": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "968": {
+      "field": "geology",
+      "subfield": "paleontology"
+    },
+    "969": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "970": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "971": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "972": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "973": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "974": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "975": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "976": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "977": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "978": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "979": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "980": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "981": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "982": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "983": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "984": {
+      "field": "geology",
+      "subfield": "tectonics"
+    },
+    "985": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "986": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "987": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "988": {
+      "field": "geology",
+      "subfield": "tectonics"
+    },
+    "989": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "990": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "991": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "992": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "993": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "994": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "995": {
+      "field": "geology",
+      "subfield": "geochemistry"
+    },
+    "996": {
+      "field": "geology",
+      "subfield": "georesources"
+    },
+    "997": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "998": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "999": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "1000": {
+      "field": "geology",
+      "subfield": "geodynamics"
+    },
+    "1001": {
+      "field": "geology",
+      "subfield": "geophysics"
+    },
+    "1002": {
+      "field": "geology",
+      "subfield": "geophysics"
+    },
+    "1003": {
+      "field": "geology",
+      "subfield": "geophysics"
+    },
+    "1004": {
+      "field": "geology",
+      "subfield": "seismology"
+    },
+    "1005": {
+      "field": "geology",
+      "subfield": "stratigraphy"
+    },
+    "1006": {
+      "field": "geology",
+      "subfield": "mineral_deposits"
+    },
+    "1007": {
+      "field": "geology",
+      "subfield": "geothermics"
+    },
+    "1008": {
+      "field": "geology",
+      "subfield": "geoecology"
+    },
+    "1009": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "1010": {
+      "field": "geology",
+      "subfield": "geoecology"
+    },
+    "1011": {
+      "field": "geology",
+      "subfield": "mining_geology"
+    },
+    "1012": {
+      "field": "geology",
+      "subfield": "petroleum_geology"
+    },
+    "1013": {
+      "field": "geology",
+      "subfield": "geoecology"
+    },
+    "1014": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "1015": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "1016": {
+      "field": "geology",
+      "subfield": "geochemistry"
+    },
+    "1017": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "1018": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "1019": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "1020": {
+      "field": "geology",
+      "subfield": "general"
+    },
+    "101": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "102": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "103": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "104": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "105": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "106": {
+      "field": "social_sciences",
+      "subfield": "economics"
+    },
+    "107": {
+      "field": "social_sciences",
+      "subfield": "digital_economy"
+    },
+    "108": {
+      "field": "social_sciences",
+      "subfield": "education_studies"
+    },
+    "109": {
+      "field": "social_sciences",
+      "subfield": "general"
+    },
+    "110": {
+      "field": "social_sciences",
+      "subfield": "digital_economy"
+    },
+    "111": {
+      "field": "social_sciences",
+      "subfield": "sociology"
+    },
+    "112": {
+      "field": "social_sciences",
+      "subfield": "general"
+    },
+    "113": {
+      "field": "biology",
+      "subfield": "crop_science"
+    },
+    "114": {
+      "field": "biology",
+      "subfield": "environmental_chemistry"
+    },
+    "115": {
+      "field": "biology",
+      "subfield": "crop_science"
+    },
+    "116": {
+      "field": "ai_ml",
+      "subfield": "classification"
+    },
+    "117": {
+      "field": "software_engineering",
+      "subfield": "software_architecture"
+    },
+    "118": {
+      "field": "data_analysis",
+      "subfield": "regression_analysis"
+    },
+    "119": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "120": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "121": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "122": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "123": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "124": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "125": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "126": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "127": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "128": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "129": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "130": {
+      "field": "geology",
+      "subfield": "geoecology_geography"
+    },
+    "392": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "393": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "394": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "395": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "396": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "397": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "398": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "399": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "400": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "401": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "402": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "403": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "404": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "405": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "406": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "407": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "408": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "409": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "410": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "411": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "412": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "413": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "414": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "415": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "416": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "417": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "418": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "419": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "420": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "421": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "422": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "423": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "424": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "425": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "426": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "427": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "428": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "429": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "430": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "431": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "432": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "433": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "434": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "435": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "436": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "437": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "438": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "439": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "440": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "441": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "442": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "443": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "444": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "445": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "446": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "447": {
+      "field": "philology",
+      "subfield": "latin_american_studies"
+    },
+    "482": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "483": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "484": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "485": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "486": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "487": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "488": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "489": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "490": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "491": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "492": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "493": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "494": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "495": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "496": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "497": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "498": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "499": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "500": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "501": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "502": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "503": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "504": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "505": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "506": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "507": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "508": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "509": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "510": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "511": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "512": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "513": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "514": {
+      "field": "philology",
+      "subfield": "literary_history"
+    },
+    "515": {
+      "field": "philology",
+      "subfield": "literary_history"
     }
   }
 }

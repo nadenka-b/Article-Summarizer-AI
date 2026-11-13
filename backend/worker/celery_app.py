@@ -25,6 +25,9 @@ celery_app = Celery(
     "article_summarizer",
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
+    # Без include воркер не импортирует модуль с задачами — они остаются
+    # незарегистрированными, и выполнение падает с "unregistered task".
+    include=["backend.worker.tasks"],
 )
 
 celery_app.conf.update(
