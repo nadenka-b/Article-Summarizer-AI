@@ -37,7 +37,7 @@ for item in items:
     score = item.get("critic_score")
     header = (
         f"⏳ {item['id'][:8]} — critic: "
-        f"{f'{score:.2f}' if score is not None else 'ошибка оценки'}"
+        f"{f'{score:.2f}' if score is not None else 'нет оценки'}"
     )
     with st.expander(header):
         detail = client.get(f"/hitl/queue/{item['id']}", token=token).json()

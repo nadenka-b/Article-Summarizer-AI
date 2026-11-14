@@ -318,7 +318,9 @@ async def perform_summarization(
 
 def _needs_human_review(state: Dict[str, Any]) -> bool:
     """Низкое качество → очередь HITL (по теме проекта)."""
-    if not state.get("validation_passed", False):
+    # None (baseline/rag — валидатор не запускался) — не повод для HITL;
+    # в очередь идут только реально провалившие валидацию резюме.
+    if state.get("validation_passed") is False:
         return True
     if state.get("critic_failed", False):
         return True
