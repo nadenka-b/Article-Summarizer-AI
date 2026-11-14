@@ -18,6 +18,17 @@ client = APIClient()
 # Хелперы (определены ДО кнопок: иначе NameError при клике)
 # ============================================================================
 def render_result(data: dict):
+    # Режим extractor: резюме нет, показываем извлечённый текст
+    if data.get("extracted_text") is not None:
+        st.subheader("Извлечённый текст")
+        st.caption(
+            f"Статья сохранена (id: {data.get('article_id', '—')}). "
+            "Режим extractor не создаёт резюме."
+        )
+        with st.expander("Показать текст", expanded=True):
+            st.text(data["extracted_text"])
+        return
+
     st.subheader("Резюме")
     st.write(data["summary"])
 

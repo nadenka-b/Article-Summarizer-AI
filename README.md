@@ -89,13 +89,34 @@ poetry run celery -A backend.worker.celery_app worker --pool=solo --loglevel=inf
 
 ### Вариант B — Docker Compose (полный стек)
 
+В контейнерах: db (Postgres 16) + redis + qdrant + app (FastAPI) + worker (Celery) + nginx.
+**UI (Streamlit) в стек не входит** — поднимается на хосте отдельно (шаг 3).
+
 ```bash
-docker compose -f infrastructure/docker-compose.yml up -d --build
-# db (Postgres 16) + redis + qdrant + app (FastAPI) + worker (Celery) + nginx
-curl http://localhost/health   # через nginx
+# 1. Конфигурация (если ещё нет .env в корне)
+cp .env.example .env
+# LM Studio на ДРУГОМ устройстве в локальной сети:
+#   - на нём: Developer -> Serve on Local Network (Start Server),
+#     при активном файрволе открыть входящий TCP 1234;
+#   - в .env: LMSTUDIO_URL=http://<IP-устройства>:1234/v1  (не localhost!);
+#   - проверить с хоста: curl http://<IP-устройства>:1234/v1/models
+# LM Studio на этой же машине — LMSTUDIO_URL можно не трогать
+# (дефолт в compose: host.docker.internal:1234/v1).
+
+# 2. Стек. ВАЖНО: --env-file .env — иначе compose ищет .env в infrastructure/
+#    и молча подставит дефолты
+docker compose --env-file .env -f infrastructure/docker-compose.yml up -d --build
+
+# Проверка
+curl http://localhost:8000/health   # {"status":"ok",...,"llm_engine":"healthy"}
+curl http://localhost/health        # то же через nginx (:80)
+docker exec summarizer_app curl -s http://<IP-устройства>:1234/v1/models  # модель видна из контейнера
+
+# 3. Веб-интерфейс (отдельный терминал; UI ходит в API на localhost:8000)
+poetry run streamlit run streamlit_app/app.py --server.port 8501   # http://localhost:8501
 ```
 
-Уточнения: LM Studio остаётся на хосте (контейнеры ходят на `host.docker.internal:1234`); модель в `docker-compose.yml` должна совпадать с загруженной в LM Studio; БД — Postgres в контейнере (отдельная от локального SQLite); Streamlit запускается на хосте как dev-инструмент.
+Уточнения: LM Studio остаётся вне контейнеров (на хосте — `host.docker.internal:1234`, на другом устройстве в LAN — его IP в `LMSTUDIO_URL`); `LMSTUDIO_MODEL` в `.env` должна совпадать с загруженной в LM Studio моделью (точный id — в ответе `/v1/models`); БД — Postgres в контейнере, порт 5432 проброшен на хост (подключение извне, например из DBeaver: `summarizer_user` / `summarizer_password`); БД отдельна от локального SQLite; Streamlit запускается на хосте как dev-инструмент.
 
 ## Проверка всех возможностей (чек-лист)
 

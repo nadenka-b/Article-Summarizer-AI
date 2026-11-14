@@ -152,6 +152,8 @@ class SummaryResponse(BaseModel):
     article_id: Optional[str] = None
     summary_id: Optional[str] = None
     summary: str = ""
+    # Режим extractor: извлечённый текст (summary при этом пуст)
+    extracted_text: Optional[str] = None
     mode: str
     summary_mode: str
     strategy: str = "none"
