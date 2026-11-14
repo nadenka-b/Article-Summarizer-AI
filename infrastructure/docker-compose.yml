@@ -40,10 +40,20 @@ services:
       DATABASE_URL: postgresql://summarizer_user:summarizer_password@db:5432/summarizer_db
       DEBUG: "true"
       PROJECT_NAME: Article-Summarizer-AI
-      # LM Studio запущен на хосте, из контейнера доступен через host.docker.internal
-      LMSTUDIO_URL: http://host.docker.internal:1234/v1
-      LMSTUDIO_MODEL: qwen2.5-7b-instruct
+      # Qdrant внутри compose-сети (иначе контейнер ищет его на localhost и
+      # молча деградирует на BM25-only)
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: "6333"
       REDIS_URL: redis://redis:6379/0
+      # LLM-движок. Значения берутся из .env рядом с compose (или --env-file ../.env).
+      # lmstudio на хосте: host.docker.internal; на другом устройстве в LAN:
+      # укажите в .env LMSTUDIO_URL=http://<IP-устройства>:1234/v1
+      LLM_ENGINE: ${LLM_ENGINE:-lmstudio}
+      LMSTUDIO_URL: ${LMSTUDIO_URL:-http://host.docker.internal:1234/v1}
+      LMSTUDIO_MODEL: ${LMSTUDIO_MODEL:-qwen2.5-7b-instruct}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-qwen/qwen-2.5-7b-instruct}
     extra_hosts:
       - "host.docker.internal:host-gateway"   # для Linux (на Windows/macOS не мешает)
     volumes:
@@ -62,6 +72,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
+    networks:
+      - summarizer_net
 
   # ============================================================================
   # Redis (брокер Celery + бэкенд результатов задач)
@@ -96,8 +108,12 @@ services:
       REDIS_URL: redis://redis:6379/0
       QDRANT_HOST: qdrant
       QDRANT_PORT: "6333"
-      LMSTUDIO_URL: http://host.docker.internal:1234/v1
-      LMSTUDIO_MODEL: qwen2.5-7b-instruct
+      LLM_ENGINE: ${LLM_ENGINE:-lmstudio}
+      LMSTUDIO_URL: ${LMSTUDIO_URL:-http://host.docker.internal:1234/v1}
+      LMSTUDIO_MODEL: ${LMSTUDIO_MODEL:-qwen2.5-7b-instruct}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-qwen/qwen-2.5-7b-instruct}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

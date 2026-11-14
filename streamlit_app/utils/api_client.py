@@ -1,10 +1,15 @@
 # streamlit_app/utils/api_client.py
 """HTTP-клиент к API Article-Summarizer-AI для Streamlit UI."""
 
+import os
+
 import httpx
 
 
-DEFAULT_API_URL = "http://localhost:8000"
+# Адрес API можно переопределить переменной окружения API_BASE_URL —
+# нужно, когда UI запускается на другом устройстве, чем API
+# (иначе localhost указывает на машину с UI, где API нет).
+DEFAULT_API_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 
 
 class APIClient:
