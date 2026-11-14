@@ -1,9 +1,14 @@
 # backend/utils/llm_client.py
 """
-LLMClient: LM Studio (OpenAI-совместимый API).
+LLMClient: OpenAI-совместимый клиент с выбором движка (этап 8).
 
-Приоритет:
-1. LM Studio (если настроен и доступен).
+Движок задаётся LLM_ENGINE в .env:
+- lmstudio  — локальный LM Studio на хосте (LMSTUDIO_URL, без ключа);
+- openrouter — облачный агрегатор OpenRouter (OPENROUTER_BASE_URL,
+              OPENROUTER_API_KEY; платный, модель OPENROUTER_MODEL).
+
+Оба говорят по одному протоколу (/models, /chat/completions), отличается
+только базовый URL, модель по умолчанию и заголовок авторизации.
 
 httpx-клиенты кэшируются на event loop (клиент привязан к loops при
 первом запросе), переиспользуются между вызовами и закрываются через
@@ -13,6 +18,7 @@ close_llm_clients() при остановке приложения.
 import asyncio
 import logging
 import re
+import time
 import weakref
 from typing import Optional
 
@@ -25,6 +31,12 @@ settings = get_settings()
 
 # Пиннинг seed для воспроизводимости генерации (как в методичке этапа 5).
 LLM_SEED = 42
+
+# Probe доступности (паттерн этапа 8): лёгкий GET /models, результат
+# кэшируется на 30 с — 100+ запросов без повторного probe; при обрыве
+# связи «фантомная доступность» живёт не дольше TTL.
+_PROBE_TIMEOUT = 3.0
+_PROBE_TTL = 30.0
 
 # Один клиент на event loop: ключ — слабая ссылка на loop.
 _clients: "weakref.WeakKeyDictionary[asyncio.AbstractEventLoop, httpx.AsyncClient]" = (
@@ -53,58 +65,99 @@ async def close_llm_clients() -> None:
 
 
 class LLMClient:
-    """Клиент для LM Studio."""
+    """Клиент активного LLM-движка (LM Studio или OpenRouter)."""
 
     def __init__(self) -> None:
-        self._lmstudio_available: Optional[bool] = None
+        self._available: Optional[bool] = None
+        self._probe_time = 0.0
 
-    async def _check_lmstudio(self, force: bool = False) -> bool:
-        """Проверяет доступность LM Studio.
+    # ------------------------------------------------------------------
+    # Доступность (probe GET /models с TTL-кэшем)
+    # ------------------------------------------------------------------
+    async def _check_engine(self, force: bool = False) -> bool:
+        """Проверяет доступность движка; force — свежая проверка мимо кэша."""
+        now = time.monotonic()
+        if (
+            not force
+            and self._available is not None
+            and now - self._probe_time < _PROBE_TTL
+        ):
+            return self._available
 
-        force=True — свежая проверка мимо кэша (для /health).
-        """
-        if not settings.LMSTUDIO_URL:
-            self._lmstudio_available = False
-            return False
-        if not force and self._lmstudio_available is not None:
-            return self._lmstudio_available
         try:
             client = _get_client()
-            r = await client.get(settings.lmstudio_models_url, timeout=3.0)
-            self._lmstudio_available = r.status_code == 200
+            r = await client.get(
+                f"{settings.llm_base_url}/models",
+                timeout=_PROBE_TIMEOUT,
+                headers=self._headers(),
+            )
+            self._available = r.status_code == 200
         except Exception:
-            self._lmstudio_available = False
-        return self._lmstudio_available
+            self._available = False
+
+        self._probe_time = now
+        return self._available
 
     async def probe(self) -> bool:
         """Свежая проверка доступности движка (используется /health)."""
-        return await self._check_lmstudio(force=True)
+        return await self._check_engine(force=True)
 
-    async def call_lmstudio(
+    # ------------------------------------------------------------------
+    # Заголовки и тело запроса
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _headers() -> dict:
+        headers = {"Content-Type": "application/json"}
+        if settings.LLM_ENGINE == "openrouter":
+            if not settings.OPENROUTER_API_KEY:
+                logger.warning(
+                    "LLM_ENGINE=openrouter, но OPENROUTER_API_KEY не задан"
+                )
+            else:
+                headers["Authorization"] = (
+                    f"Bearer {settings.OPENROUTER_API_KEY}"
+                )
+            # Рекомендация OpenRouter: идентификация приложения для дашборда.
+            headers["X-Title"] = "Article-Summarizer-AI"
+        return headers
+
+    @staticmethod
+    def _request_body(
+        model: str, prompt: str, temperature: float
+    ) -> dict:
+        body: dict = {
+            "model": model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": temperature,
+            "seed": LLM_SEED,
+            "stream": False,
+            # Страховка от бесконечной генерации:
+            "max_tokens": settings.LLM_MAX_TOKENS,
+        }
+        if settings.LLM_ENGINE == "lmstudio":
+            # Отключаем «размышления» thinking-моделей (Qwen3+) — это
+            # параметр локального vLLM/LM Studio-рантайма. Облаку его не
+            # шлём: провайдеры OpenRouter могут ответить 400 на незнакомое
+            # поле.
+            body["chat_template_kwargs"] = {"enable_thinking": False}
+        return body
+
+    # ------------------------------------------------------------------
+    # Вызов
+    # ------------------------------------------------------------------
+    async def call_chat(
         self,
         prompt: str,
         model: Optional[str] = None,
         temperature: float = 0.3,
     ) -> str:
-        """Вызов LM Studio через /chat/completions."""
-        model = model or settings.LMSTUDIO_MODEL
+        """Вызов /chat/completions активного движка."""
+        model = model or settings.default_model
         client = _get_client()
         response = await client.post(
-            settings.lmstudio_chat_url,
-            headers={"Content-Type": "application/json"},
-            json={
-                "model": model,
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": temperature,
-                "seed": LLM_SEED,
-                "stream": False,
-                # Отключаем «размышления» thinking-моделей (Qwen3+):
-                # без этого ответ может целиком уйти в reasoning_content,
-                # а content останется пустым. Модели без thinking игнорируют.
-                "chat_template_kwargs": {"enable_thinking": False},
-                # Страховка от бесконечной генерации:
-                "max_tokens": settings.LLM_MAX_TOKENS,
-            },
+            f"{settings.llm_base_url}/chat/completions",
+            headers=self._headers(),
+            json=self._request_body(model, prompt, temperature),
             timeout=settings.LLM_TIMEOUT_SECONDS,
         )
         response.raise_for_status()
@@ -119,9 +172,12 @@ class LLMClient:
                 "Модель вернула пустой ответ (content пуст; ответ ушёл в "
                 "reasoning_content — используйте не-thinking модель "
                 "(напр. Qwen2.5-7B-Instruct) или отключите reasoning "
-                "в настройках LM Studio)"
+                "в настройках движка)"
             )
         return str(content)
+
+    # Историческое имя (этапы 5-9 вызывали именно его)
+    call_lmstudio = call_chat
 
     @staticmethod
     def _extract_content(message: dict) -> Optional[str]:
@@ -155,18 +211,17 @@ class LLMClient:
 
         Возвращает: (текст, движок, модель).
         """
-        # 1. LM Studio
-        if await self._check_lmstudio():
+        if await self._check_engine():
             try:
-                text = await self.call_lmstudio(prompt, model, temperature)
-                return text, "lmstudio", model or settings.LMSTUDIO_MODEL
+                text = await self.call_chat(prompt, model, temperature)
+                return text, settings.LLM_ENGINE, model or settings.default_model
             except Exception as e:
                 # Ошибка вызова ≠ сервер недоступен: кэш доступности
                 # не отравляем, чтобы retry мог попробовать снова.
-                logger.warning("LM Studio call failed: %s", e)
+                logger.warning("LLM call failed (%s): %s", settings.LLM_ENGINE, e)
                 raise
 
-        raise RuntimeError("LM Studio недоступен")
+        raise RuntimeError(f"LLM-движок {settings.LLM_ENGINE!r} недоступен")
 
 
 # Singleton

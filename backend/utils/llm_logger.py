@@ -3,7 +3,6 @@
 
 import hashlib
 import logging
-import time
 from typing import Optional
 
 from sqlalchemy.ext.asyncio import AsyncSession

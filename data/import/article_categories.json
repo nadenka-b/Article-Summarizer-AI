@@ -4094,6 +4094,90 @@
     "515": {
       "field": "philology",
       "subfield": "literary_history"
+    },
+    "1021": {
+      "field": "ai_ml",
+      "subfield": "machine_learning"
+    },
+    "1022": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1023": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1024": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1025": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1026": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1027": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1028": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1029": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1030": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1031": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1032": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1033": {
+      "field": "ai_ml",
+      "subfield": "neural_networks"
+    },
+    "1034": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1035": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1036": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1037": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1038": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1039": {
+      "field": "ai_ml",
+      "subfield": "neural_networks"
+    },
+    "1040": {
+      "field": "information_systems",
+      "subfield": "information_systems"
+    },
+    "1041": {
+      "field": "information_systems",
+      "subfield": "information_systems"
     }
   }
 }

@@ -55,6 +55,7 @@ async def health(db: AsyncSession = Depends(get_async_session)):
         "status": "ok" if healthy else "degraded",
         "database": db_status,
         "llm_engine": llm_status,
+        "llm_engine_name": settings.LLM_ENGINE,
     }
     if not healthy:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=body)

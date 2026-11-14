@@ -8,7 +8,7 @@ import json
 
 import pytest
 
-from backend.db.models import Article, Summary, SummaryCache, UncertainExample
+from backend.db.models import Article, Summary, UncertainExample
 
 
 # ============================================================================

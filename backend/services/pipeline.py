@@ -16,7 +16,6 @@ Celery-задачами (этап 11) и eval-скриптами (этап 12), 
 """
 
 import asyncio
-import hashlib
 import json
 import logging
 import uuid
@@ -269,8 +268,8 @@ async def perform_summarization(
             critic_score=result.critic_score,
             validation_passed=result.validation_passed,
             critic_reasoning=state.get("critic_reasoning"),
-            model_used=settings.LMSTUDIO_MODEL,
-            engine_used="lmstudio",
+            model_used=settings.default_model,
+            engine_used=settings.LLM_ENGINE,
             supervisor_iterations=result.supervisor_iterations,
         )
         db.add(summary_row)
@@ -296,7 +295,8 @@ async def perform_summarization(
         if use_cache:
             await cache.put(
                 db, source_hash, summary_mode, summary,
-                engine_used="lmstudio", model_used=settings.LMSTUDIO_MODEL,
+                engine_used=settings.LLM_ENGINE,
+                model_used=settings.default_model,
             )
 
         await db.flush()

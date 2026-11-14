@@ -14,7 +14,7 @@
 
 import logging
 import uuid
-from typing import Any, List, Optional, Sequence, Tuple
+from typing import List, Optional, Sequence, Tuple
 
 from backend.core.config import get_settings
 from backend.data.embeddings import encode_texts

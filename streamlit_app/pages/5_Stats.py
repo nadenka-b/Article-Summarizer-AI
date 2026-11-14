@@ -31,12 +31,13 @@ else:
 cols = st.columns(3)
 db_state = data.get("database", "unknown")
 llm_state = data.get("llm_engine", "unknown")
+engine_name = data.get("llm_engine_name", "llm")
 cols[0].metric(
     "База данных", "🟢" if db_state == "healthy" else "🔴",
     help=db_state,
 )
 cols[1].metric(
-    "LLM-движок (LM Studio)", "🟢" if llm_state == "healthy" else "🔴",
+    f"LLM-движок ({engine_name})", "🟢" if llm_state == "healthy" else "🔴",
     help=llm_state,
 )
 cols[2].metric("API", "🟢" if health.status_code else "🔴")

@@ -54,10 +54,6 @@ class Settings(BaseSettings):
     SUMMARY_MODE: str = Field(
         default="abstract", validation_alias="SUMMARY_MODE"
     )  # abstract | section_wise
-    # Лимит длины входной статьи (этап 8, chunking):
-    MAX_ARTICLE_LENGTH: int = Field(
-        default=50000, validation_alias="MAX_ARTICLE_LENGTH"
-    )
     # Чанкинг (этап 8): текст длиннее SUMMARIZER_DIRECT_CHARS разбивается
     # на чанки по предложениям с перекрытием:
     SUMMARIZER_DIRECT_CHARS: int = Field(
@@ -79,8 +75,12 @@ class Settings(BaseSettings):
     )
 
     # ========================================================================
-    # LM Studio (OpenAI-совместимый сервер на хосте)
+    # LLM-движок: LM Studio (локально) или OpenRouter (облако).
+    # Оба говорят по OpenAI-совместимому API, выбор — переменной LLM_ENGINE.
     # ========================================================================
+    LLM_ENGINE: str = Field(
+        default="lmstudio", validation_alias="LLM_ENGINE"
+    )
     LMSTUDIO_URL: str = Field(
         default="http://localhost:1234/v1",
         validation_alias="LMSTUDIO_URL",
@@ -99,7 +99,7 @@ class Settings(BaseSettings):
         default=6000, validation_alias="LLM_MAX_TOKENS"
     )
     # Необязательные переопределения модели для отдельных агентов
-    # (этап 8, тюнинг движка; None → LMSTUDIO_MODEL).
+    # (этап 8, тюнинг движка; None → модель активного движка).
     # Validator не указан: он rule-based и LLM не вызывает.
     SUMMARIZER_MODEL: Optional[str] = Field(
         default=None, validation_alias="SUMMARIZER_MODEL"
@@ -109,6 +109,23 @@ class Settings(BaseSettings):
     )
     EDITOR_MODEL: Optional[str] = Field(
         default=None, validation_alias="EDITOR_MODEL"
+    )
+
+    # ========================================================================
+    # OpenRouter (облачный OpenAI-совместимый агрегатор моделей)
+    # ========================================================================
+    OPENROUTER_API_KEY: Optional[str] = Field(
+        default=None, validation_alias="OPENROUTER_API_KEY"
+    )
+    OPENROUTER_BASE_URL: str = Field(
+        default="https://openrouter.ai/api/v1",
+        validation_alias="OPENROUTER_BASE_URL",
+    )
+    # Модель по умолчанию в облаке: та же Qwen2.5-7B, что и локально, —
+    # поведение конвейера не зависит от места исполнения.
+    OPENROUTER_MODEL: str = Field(
+        default="qwen/qwen-2.5-7b-instruct",
+        validation_alias="OPENROUTER_MODEL",
     )
 
     # ========================================================================
@@ -201,6 +218,20 @@ class Settings(BaseSettings):
         return f"http://{self.QDRANT_HOST}:{self.QDRANT_PORT}"
 
     @property
+    def llm_base_url(self) -> str:
+        """Базовый URL активного LLM-движка (OpenAI-совместимый)."""
+        if self.LLM_ENGINE == "openrouter":
+            return self.OPENROUTER_BASE_URL.rstrip("/")
+        return self.LMSTUDIO_URL.rstrip("/")
+
+    @property
+    def default_model(self) -> str:
+        """Модель по умолчанию активного движка."""
+        if self.LLM_ENGINE == "openrouter":
+            return self.OPENROUTER_MODEL
+        return self.LMSTUDIO_MODEL
+
+    @property
     def lmstudio_chat_url(self) -> str:
         return f"{self.LMSTUDIO_URL.rstrip('/')}/chat/completions"
 
@@ -211,6 +242,16 @@ class Settings(BaseSettings):
     # ========================================================================
     # Validators
     # ========================================================================
+
+    @field_validator("LLM_ENGINE")
+    @classmethod
+    def validate_llm_engine(cls, v: str) -> str:
+        allowed = {"lmstudio", "openrouter"}
+        if v not in allowed:
+            raise ValueError(
+                f"LLM_ENGINE должен быть одним из {allowed}, получено: {v!r}"
+            )
+        return v
 
     @field_validator("EVAL_MODE")
     @classmethod

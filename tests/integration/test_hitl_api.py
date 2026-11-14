@@ -7,7 +7,6 @@
 
 import json as json_module
 
-import pytest
 from sqlalchemy import select, update
 
 from backend.db.models import KnowledgeBase, User

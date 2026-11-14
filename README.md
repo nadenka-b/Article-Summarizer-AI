@@ -35,7 +35,7 @@ Article-Summarizer-AI — интеллектуальная система авт
 
 ### Предварительные требования
 - Python 3.12 + Poetry 2.x;
-- [LM Studio](https://lmstudio.ai) с моделью **Qwen2.5-7B-Instruct (Q4_K_M)** — локальный LLM-движок;
+- [LM Studio](https://lmstudio.ai) с моделью **Qwen2.5-7B-Instruct (Q4_K_M)** — локальный LLM-движок (или аккаунт OpenRouter — облако, выбор переменной `LLM_ENGINE`);
 - (~32 ГБ RAM комфортно: LLM + эмбеддинг-модель грузятся одновременно);
 - Docker Desktop — только для опций: Redis (фоновый режим) или полный стек.
 
@@ -51,12 +51,15 @@ python -m poetry run pip install -r streamlit_app/requirements.txt
 cp .env.example .env
 # В .env задать: ADMIN_EMAIL, LMSTUDIO_MODEL, JWT_SECRET_KEY
 
-# 3. LLM-движок: LM Studio
-#    Загрузить модель qwen2.5-7b-instruct (Q4_K_M) и запустить сервер:
-#      GUI: Developer -> Start Server (порт 1234)
-#      CLI: lms server start
-#    Проверка (id модели должен совпадать с LMSTUDIO_MODEL в .env):
+# 3. LLM-движок (LLM_ENGINE в .env):
+#    a) lmstudio — локальный LM Studio: загрузить модель qwen2.5-7b-instruct
+#       (Q4_K_M) и запустить сервер (GUI: Developer -> Start Server; CLI: lms
+#       server start). Проверка (id = LMSTUDIO_MODEL):
 curl http://localhost:1234/v1/models
+#    b) openrouter — облако без локальной LLM (удобно для демо на слабом
+#       железе): в .env задать LLM_ENGINE=openrouter, OPENROUTER_API_KEY и
+#       OPENROUTER_MODEL=qwen/qwen-2.5-7b-instruct (та же модель, что
+#       локально). Ключ не коммитить!
 
 # 4. Первый администратор (только если БД пустая):
 #    зарегистрировать пользователя с email = ADMIN_EMAIL через UI или
@@ -183,15 +186,14 @@ HITL-очередь редактора, администрирование ро�
 
 ## Ограничения
 
-- LLM — локальный LM Studio: качество и скорость зависят от железа
-  (Qwen2.5-7B Q4 на CPU ≈ 30–90 с на резюме);
+- LLM — локальный LM Studio (качество и скорость зависят от железа,
+  Qwen2.5-7B Q4 на CPU ≈ 30–90 с на резюме) или облачный OpenRouter
+  (быстрее, но требует сети и платный);
 - BM25 матчит точные словоформы (без стемминга) — семантическую
   часть закрывает векторный поиск;
 - арХив-режим требует доступа в сеть; сканированные PDF без OCR не
   извлекаются;
 - режим `ensemble` (EVAL_MODE) отложен — каркас eval готов;
-- база знаний — 99 пар (первая сотня корпуса); порог ТЗ ≥ 1000 пар
-  планируется добрать пакетным импортом из открытых датасетов.
 
 ## Стек
 FastAPI · SQLAlchemy async · Celery + Redis · Qdrant + rank-bm25 (RRF) ·
@@ -200,8 +202,8 @@ LM Studio (OpenAI-совместимый API) · PyMuPDF · PostgreSQL/SQLite ·
 Docker Compose + Nginx · Streamlit · pytest (171 тест) · sacrebleu/ROUGE/BERTScore
 
 ## Команда проекта
-- Саттарова Аделина — Backend-инженерия, интеграция БД, разработка RAG-компонентов.
-- Балабанова Надежда — Проектирование мультиагентной системы, промпт-инжиниринг, расчет метрик.
+- Балабанова Надежда — ML-инженерия и данные: инфраструктура репозитория, агент Extractor, корпус и глоссарий, гибридный RAG, чанкинг и иерархическая суммаризация, API `/summarize/*`, HITL и активное обучение (этапы 1, 6–10).
+- Саттарова Аделина — Backend-инженерия и DevOps: каркас FastAPI, БД и Docker, JWT-аутентификация и роли, мультиагентный конвейер (Summarizer/Validator/Critic/Editor/Supervisor), Celery-фоновые задачи, Streamlit UI, метрики качества и Nginx (этапы 2–5, 11–12).
 
 ## Статус выполнения проекта
 - [x] Этап 1: Выбор темы, проектирование архитектуры и настройка окружения

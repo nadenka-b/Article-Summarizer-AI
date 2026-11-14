@@ -55,3 +55,5 @@ data/*
 # OS
 .DS_Store
 Thumbs.db
+# Бэкапы БД (224 МБ с полными текстами и хешами паролей — не для git)
+db_backup*.sql

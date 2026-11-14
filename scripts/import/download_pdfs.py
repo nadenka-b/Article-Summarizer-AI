@@ -137,6 +137,13 @@ def pdf_candidates(url: str, html: str) -> list[str]:
 
     # Прямые ссылки на .pdf внутри страницы (esj, rusklassika, psyjournals, geolvestnik, sfu).
     en_candidates: list[str] = []
+    foreign_candidates: list[str] = []
+
+    def same_site(host: str) -> bool:
+        """Свой хост или его поддомен (journal.sfu-kras.ru -> elib.sfu-kras.ru)."""
+        h = host.lower().removeprefix("www.")
+        return h == base_host or h.endswith("." + base_host)
+
     for href in PDF_HREF_RE.findall(html):
         if base_host == "geolvestnik.ru" and not href.startswith(("http", "/")):
             # geolvestnik отдаёт пути от корня сайта без ведущего слэша.
@@ -150,8 +157,14 @@ def pdf_candidates(url: str, html: str) -> list[str]:
             # англоязычная версия статьи — только если русской PDF нет.
             en_candidates.append(full)
             continue
+        if not same_site(parsed.netloc):
+            # PDF с чужого домена — почти всегда ссылка из текста статьи,
+            # а не сам файл; пробуем в последнюю очередь.
+            foreign_candidates.append(full)
+            continue
         cands.append(full)
     cands.extend(en_candidates)
+    cands.extend(foreign_candidates)
 
     # OJS: galley view/ID/GALLEY -> download/ID/GALLEY (actabiomedica, edscience,
     # omet, geors, geosouth, vsu, narfu). Нулевой galley — не PDF, пропускаем.

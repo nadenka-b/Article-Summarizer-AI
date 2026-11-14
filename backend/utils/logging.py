@@ -11,7 +11,6 @@
 
 import logging
 import logging.config
-import os
 import sys
 from datetime import datetime
 from pathlib import Path

@@ -18,7 +18,7 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.api.deps import get_current_user, get_db, require_editor
+from backend.api.deps import get_db, require_editor
 from backend.core.models import (
     HITLConfirmRequest,
     HITLDetail,
