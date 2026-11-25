@@ -20,6 +20,7 @@ import json
 import logging
 import uuid
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import httpx
@@ -59,6 +60,8 @@ class SummarizationResult:
     article_id: Optional[str] = None
     summary_id: Optional[str] = None
     summary: str = ""
+    # Режим extractor: извлечённый текст (summary при этом пуст)
+    extracted_text: Optional[str] = None
     mode: str = "agents"
     summary_mode: str = "abstract"
     strategy: str = "none"
@@ -180,6 +183,11 @@ async def perform_summarization(
     async with _summarization_semaphore:
         state = await _prepare_state(article_text, pdf_bytes, arxiv_id)
 
+        # Трассировка: сессия БД и request_id доступны агентам через state
+        # (пишутся в llm_calls и reasoning_logs)
+        state["_db"] = db
+        state["_request_id"] = str(uuid.uuid4())
+
         text = state.get("article_text") or ""
         if not text.strip():
             raise SummarizerException("Не удалось получить текст статьи")
@@ -195,9 +203,13 @@ async def perform_summarization(
                 source_id=arxiv_id,
             )
             result.article_id = article.id
+            result.extracted_text = text
             result.final_reason = "extractor_only"
             result.reasoning_log = state.get("reasoning_log", [])
-            await _persist_reasoning_logs(db, None, result.reasoning_log)
+            await _persist_reasoning_logs(
+                db, None, result.reasoning_log,
+                request_id=state.get("_request_id"),
+            )
             await db.flush()
             return result
 
@@ -277,7 +289,8 @@ async def perform_summarization(
         result.summary_id = summary_row.id
 
         await _persist_reasoning_logs(
-            db, summary_row.id, result.reasoning_log
+            db, summary_row.id, result.reasoning_log,
+            request_id=state.get("_request_id"),
         )
 
         # --- HITL: плохое качество → очередь модерации ---
@@ -305,7 +318,9 @@ async def perform_summarization(
 
 def _needs_human_review(state: Dict[str, Any]) -> bool:
     """Низкое качество → очередь HITL (по теме проекта)."""
-    if not state.get("validation_passed", False):
+    # None (baseline/rag — валидатор не запускался) — не повод для HITL;
+    # в очередь идут только реально провалившие валидацию резюме.
+    if state.get("validation_passed") is False:
         return True
     if state.get("critic_failed", False):
         return True
@@ -353,22 +368,37 @@ async def _persist_article(
     return article
 
 
+def _parse_dt(value: Optional[str]) -> Optional[datetime]:
+    """ISO-строка из reasoning_log агента → datetime (или None)."""
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value)
+    except ValueError:
+        return None
+
+
 async def _persist_reasoning_logs(
     db: AsyncSession,
     summary_id: Optional[str],
     entries: List[Dict[str, Any]],
+    request_id: Optional[str] = None,
 ) -> None:
     """Сохраняет историю работы агентов в reasoning_logs."""
     if not entries:
         return
 
-    request_id = str(uuid.uuid4())
+    request_id = request_id or str(uuid.uuid4())
     for entry in entries:
         db.add(ReasoningLog(
             request_id=request_id,
             agent_name=entry.get("agent", "unknown"),
             input_summary=None,
             output_summary=entry.get("error"),
+            model_name=entry.get("model"),
+            parameters=None,
+            started_at=_parse_dt(entry.get("started_at")),
+            finished_at=_parse_dt(entry.get("finished_at")),
             status=entry.get("status", "success"),
         ))
 

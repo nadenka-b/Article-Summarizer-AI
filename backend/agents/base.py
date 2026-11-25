@@ -58,6 +58,9 @@ class Agent(ABC):
             raise
         finally:
             latency_ms = int((time.perf_counter() - start) * 1000)
+            # Агенты получают db/request_id из state пайплайна (self._db)
+            db = db or getattr(self, "_db", None)
+            request_id = request_id or getattr(self, "_request_id", None)
             if db is not None:
                 await log_llm_call(
                     db,
@@ -79,6 +82,10 @@ class Agent(ABC):
 
     async def run(self, state: Dict[str, Any]) -> Dict[str, Any]:
         """Обёртка: тайминги, ошибки, запись в reasoning_log."""
+        # Трассировка llm_calls: сессия и request_id из state пайплайна
+        self._db = state.get("_db")
+        self._request_id = state.get("_request_id")
+
         start_perf = time.perf_counter()
         log_entry: Dict[str, Any] = {
             "agent": self.name,

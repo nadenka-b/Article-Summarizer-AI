@@ -72,7 +72,10 @@ if st.button("Суммаризировать", type="primary", use_container_wid
         cols[0].metric("Critic", data.get("critic_score") or "—")
         cols[1].metric(
             "Валидация",
-            "✅" if data.get("validation_passed") else "❌",
+            # None — валидатор не запускался (baseline/rag), это не провал
+            "—"
+            if data.get("validation_passed") is None
+            else ("✅" if data["validation_passed"] else "❌"),
         )
         cols[2].metric("Итерации", data.get("supervisor_iterations", 0))
         cols[3].metric("Стратегия", data.get("strategy", "—"))
