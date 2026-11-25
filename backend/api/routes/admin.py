@@ -1,18 +1,22 @@
 # backend/api/routes/admin.py
 """
-Админ-роуты (этап 10).
+Админ-роуты (этап 10+).
 
-Минимальное управление пользователями: назначение ролей.
-Без этого назначить редактора для HITL-очереди можно только из БД.
+Управление пользователями (назначение ролей) и просмотр метрик качества:
+GET /admin/metrics отдаёт отчёты scripts/eval/run_eval.py из data/eval/.
 """
 
+import json
 import logging
+from datetime import datetime
+from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.api.deps import get_db, require_admin
+from backend.core.config import get_settings
 from backend.core.models import UserAdminOut, UserRoleRequest
 from backend.db.models import User
 
@@ -74,3 +78,52 @@ async def change_role(
         admin.username, user.username, old_role, payload.role,
     )
     return UserAdminOut.model_validate(user)
+
+
+@router.get(
+    "/metrics",
+    summary="Отчёты метрик качества по режимам (admin)",
+)
+async def eval_metrics(admin: User = Depends(require_admin)) -> dict:
+    """Отдаёт JSON-отчёты scripts/eval/run_eval.py из EVAL_REPORTS_DIR.
+
+    Один файл = один прогон eval_<mode>_<n>.json. Если режим прогоняли
+    несколько раз, клиенту нужны все версии (свежая — по mtime).
+    """
+    reports_dir = Path(get_settings().EVAL_REPORTS_DIR)
+    if not reports_dir.is_dir():
+        return {
+            "reports": [],
+            "hint": (
+                "Каталог отчётов не найден. Запустите "
+                "python scripts/eval/run_eval.py --mode <baseline|rag|agents> "
+                "--limit <N> и обновите страницу."
+            ),
+        }
+
+    reports = []
+    for path in sorted(reports_dir.glob("eval_*.json")):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as e:
+            logger.warning("Пропущен битый отчёт %s: %s", path.name, e)
+            continue
+        metrics = data.get("metrics", {})
+        reports.append({
+            "file": path.name,
+            "mode": metrics.get("mode") or path.stem.split("_")[1],
+            "mtime": datetime.fromtimestamp(
+                path.stat().st_mtime
+            ).isoformat(timespec="seconds"),
+            "metrics": metrics,
+            "per_article": data.get("per_article", []),
+        })
+
+    return {
+        "reports": reports,
+        "hint": "" if reports else (
+            "Отчётов пока нет. Запустите "
+            "python scripts/eval/run_eval.py --mode <baseline|rag|agents> "
+            "--limit <N> и обновите страницу."
+        ),
+    }

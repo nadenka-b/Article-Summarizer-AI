@@ -59,6 +59,7 @@ services:
     volumes:
       - ../backend:/app/backend    # для hot-reload в dev
       - ../logs:/app/logs
+      - ../data/eval:/app/data/eval:ro   # отчёты метрик для /admin/metrics
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
       interval: 10s

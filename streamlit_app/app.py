@@ -185,6 +185,9 @@ def build_navigation():
         pages.append(
             st.Page("pages/4_Admin.py", title="Администрирование", icon="👑")
         )
+        pages.append(
+            st.Page("pages/7_Metrics.py", title="Метрики качества", icon="🎯")
+        )
 
     return st.navigation(pages)
 

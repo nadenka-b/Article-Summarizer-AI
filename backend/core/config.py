@@ -33,6 +33,10 @@ class Settings(BaseSettings):
     )
     DEBUG: bool = Field(default=True, validation_alias="DEBUG")
     EVAL_MODE: str = Field(default="agents", validation_alias="EVAL_MODE")
+    # Каталог JSON-отчётов scripts/eval/run_eval.py (читается /admin/metrics):
+    EVAL_REPORTS_DIR: str = Field(
+        default="data/eval", validation_alias="EVAL_REPORTS_DIR"
+    )
     ACTIVE_LEARNING_ENABLED: bool = Field(
         default=True, validation_alias="ACTIVE_LEARNING_ENABLED"
     )
