@@ -35,7 +35,17 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
+    # Весь ../.env пробрасываем в контейнер как переменные окружения
+    # (JWT_SECRET_KEY, HITL_CRITIC_THRESHOLD, HF_TOKEN, LLM-настройки...).
+    # В образ .env не копируется (.dockerignore) — секреты остаются
+    # только в рантайме контейнера.
+    env_file:
+      - ../.env
     environment:
+      # environment: имеет приоритет над env_file — здесь только
+      # контейнерные переопределения топологии compose-сети.
+      # LM Studio на хосте: в .env LMSTUDIO_URL=http://host.docker.internal:1234/v1;
+      # на другом устройстве в LAN: http://<IP-устройства>:1234/v1
       # Переопределяем DATABASE_URL для контейнера: db — имя сервиса
       DATABASE_URL: postgresql://summarizer_user:summarizer_password@db:5432/summarizer_db
       DEBUG: "true"
@@ -45,15 +55,6 @@ services:
       QDRANT_HOST: qdrant
       QDRANT_PORT: "6333"
       REDIS_URL: redis://redis:6379/0
-      # LLM-движок. Значения берутся из .env рядом с compose (или --env-file ../.env).
-      # lmstudio на хосте: host.docker.internal; на другом устройстве в LAN:
-      # укажите в .env LMSTUDIO_URL=http://<IP-устройства>:1234/v1
-      LLM_ENGINE: ${LLM_ENGINE:-lmstudio}
-      LMSTUDIO_URL: ${LMSTUDIO_URL:-http://host.docker.internal:1234/v1}
-      LMSTUDIO_MODEL: ${LMSTUDIO_MODEL:-qwen2.5-7b-instruct}
-      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
-      OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
-      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-qwen/qwen-2.5-7b-instruct}
     extra_hosts:
       - "host.docker.internal:host-gateway"   # для Linux (на Windows/macOS не мешает)
     volumes:
@@ -103,18 +104,16 @@ services:
     container_name: summarizer_worker
     restart: unless-stopped
     command: celery -A backend.worker.celery_app worker --loglevel=info --concurrency=2
+    # Как у app: весь ../.env в контейнер, environment: — только
+    # переопределения топологии compose-сети (приоритет выше env_file).
+    env_file:
+      - ../.env
     environment:
       DATABASE_URL: postgresql://summarizer_user:summarizer_password@db:5432/summarizer_db
       DEBUG: "true"
       REDIS_URL: redis://redis:6379/0
       QDRANT_HOST: qdrant
       QDRANT_PORT: "6333"
-      LLM_ENGINE: ${LLM_ENGINE:-lmstudio}
-      LMSTUDIO_URL: ${LMSTUDIO_URL:-http://host.docker.internal:1234/v1}
-      LMSTUDIO_MODEL: ${LMSTUDIO_MODEL:-qwen2.5-7b-instruct}
-      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
-      OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
-      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-qwen/qwen-2.5-7b-instruct}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

@@ -10,12 +10,13 @@ import logging
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from backend.api.deps import get_current_user, get_db
 from backend.data.knowledge_base import KBManager
-from backend.db.models import Article, Summary, User
+from backend.db.models import Article, User
 from backend.retrieval.hybrid_retriever import hybrid_search
 from backend.retrieval.vector_index import get_vector_index
 
@@ -30,29 +31,44 @@ kb_router = APIRouter(prefix="/kb", tags=["knowledge-base"])
 # ============================================================================
 @router.get(
     "/my",
-    summary="Статьи текущего пользователя с резюме",
+    summary="Статьи текущего пользователя с резюме (пагинация)",
 )
 async def my_articles(
     limit: int = Query(default=50, ge=1, le=200),
+    offset: int = Query(default=0, ge=0),
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
-) -> list[dict]:
+) -> dict:
+    """Страница статей пользователя + общее число (total) по пользователю.
+
+    total — отдельный COUNT-запрос: len(articles) отражает только размер
+    текущей страницы, и на объёме больше limit счётчик в UI «замирал».
+    """
+    total = await db.scalar(
+        select(func.count())
+        .select_from(Article)
+        .where(Article.owner_id == user.id)
+    )
+
+    # selectinload: резюме всех статей страницы одним запросом (было N+1 —
+    # по запросу на каждую статью).
     result = await db.execute(
         select(Article)
+        .options(selectinload(Article.summaries))
         .where(Article.owner_id == user.id)
         .order_by(Article.created_at.desc())
         .limit(limit)
+        .offset(offset)
     )
     articles = result.scalars().all()
 
     response = []
     for article in articles:
-        summaries_result = await db.execute(
-            select(Summary)
-            .where(Summary.article_id == article.id)
-            .order_by(Summary.created_at.desc())
+        # Свежие резюме сверху — как раньше, но сортировка здесь,
+        # а не в SQL (коллекцию грузит selectinload).
+        summaries = sorted(
+            article.summaries, key=lambda s: s.created_at, reverse=True
         )
-        summaries = summaries_result.scalars().all()
 
         response.append({
             "article_id": article.id,
@@ -71,11 +87,11 @@ async def my_articles(
                     "summary_text": s.summary_text,
                     "created_at": s.created_at.isoformat(),
                 }
-                for s in summaries
-            ],
-        })
+            for s in summaries
+        ],
+    })
 
-    return response
+    return {"total": total, "limit": limit, "offset": offset, "articles": response}
 
 
 # ============================================================================

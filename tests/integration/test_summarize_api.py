@@ -57,6 +57,19 @@ def fake_llm(monkeypatch):
     return client
 
 
+@pytest.fixture(autouse=True)
+def pin_hitl_threshold(monkeypatch):
+    """Тест не должен зависеть от HITL_CRITIC_THRESHOLD в локальном .env.
+
+    Ожидания ниже (hitl_created is False при critic 9.0) верны для дефолтного
+    порога 7.0; в рабочем .env порог бывает поднят (например, до 9.5) для
+    ручной проверки HITL-контура.
+    """
+    from backend.core.config import get_settings
+
+    monkeypatch.setattr(get_settings(), "HITL_CRITIC_THRESHOLD", 7.0)
+
+
 @pytest.fixture
 async def auth_headers(client):
     """Регистрирует пользователя и возвращает заголовки с токеном."""

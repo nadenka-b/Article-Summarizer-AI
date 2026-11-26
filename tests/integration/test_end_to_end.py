@@ -164,7 +164,10 @@ class TestEndToEnd:
         # --- 7. Мои статьи ---
         mine = await client.get("/articles/my", headers=admin["headers"])
         assert mine.status_code == 200
-        articles = mine.json()
+        payload = mine.json()
+        # Ответ-конверт: total (COUNT по пользователю) + страница статей
+        assert payload["total"] == 1
+        articles = payload["articles"]
         assert len(articles) == 1
         assert articles[0]["summaries"][0]["summary_id"] == summary_id
         # Резюме обновлено исправленной версией
