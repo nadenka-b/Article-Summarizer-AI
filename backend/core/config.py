@@ -155,6 +155,9 @@ class Settings(BaseSettings):
     # ========================================================================
     # Эмбеддинги (гибридный RAG)
     # ========================================================================
+    # Токен Hugging Face (необязателен): без него Hub пускает анонимом —
+    # ниже лимиты, медленнее скачивание (BERTScore в eval, эмбеддинги).
+    HF_TOKEN: Optional[str] = Field(default=None, validation_alias="HF_TOKEN")
     EMBEDDING_MODEL: str = Field(
         default="paraphrase-multilingual-MiniLM-L12-v2",
         validation_alias="EMBEDDING_MODEL",

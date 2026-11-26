@@ -66,12 +66,15 @@ def critic_json(score: float) -> str:
     )
 
 
-# Текст-заглушка резюме: 64 слова (лимит Validator — 50), содержит термин "test",
-# не совпадает дословно со статьёй "Test ... Test".
+# Текст-заглушка резюме: 78 слов (минимум Validator — 50), на русском
+# (Validator требует кириллицу), содержит термин "метод", не совпадает
+# дословно со статьёй-заглушкой.
 SUMMARY_TEXT = (
-    "This test summary describes a novel scientific method "
-    "for article summarization and reports improved quality metrics. "
-) * 4
+    "Это тестовое резюме научной статьи описывает новый метод "
+    "автоматической суммаризации публикаций и приводит улучшенные "
+    "метрики качества, данные экспериментов и выводы о применимости "
+    "подхода в редакционных пайплайнах. "
+) * 3
 
 
 # ============================================================================
@@ -176,13 +179,24 @@ class TestValidator:
 
     async def test_good_summary_passes(self):
         v = ValidatorAgent()
-        summary = " ".join(["word"] * 100)  # 100 слов
+        summary = " ".join(["слово"] * 100)  # 100 слов, русский
         state = {
             "summary": summary,
-            "key_terms": ["word"],
+            "key_terms": ["слово"],
         }
         result = await v.run(state)
         assert result["validation_passed"] is True
+
+    async def test_foreign_language_summary_fails(self):
+        """Резюме не на русском (китайский/английский) — ошибка валидации."""
+        v = ValidatorAgent()
+        summary = (
+            "作者研究了利用递归神经网络进行多任务处理新闻流的方法。"
+            * 20
+        )  # 100 «слов», но кириллицы нет
+        result = await v.run({"summary": summary})
+        assert result["validation_passed"] is False
+        assert any("не на русском" in e for e in result["validator_errors"])
 
     async def test_plagiarism_detected(self):
         v = ValidatorAgent()
@@ -343,7 +357,7 @@ class TestSupervisor:
         state = {
             "article_text": "Test " * 200,
             "summary_mode": "abstract",
-            "key_terms": ["test"],
+            "key_terms": ["метод"],
         }
         result = await sup.run(state)
         assert result["supervisor_iterations"] == 1

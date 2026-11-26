@@ -11,13 +11,16 @@ logger = logging.getLogger(__name__)
 
 
 class ValidatorAgent(Agent):
-    """Проверка длины, плагиата, покрытия терминов."""
+    """Проверка длины, языка, плагиата, покрытия терминов."""
 
     name = "validator"
     MIN_WORDS: int = 50
     MAX_WORDS: int = 500
     MIN_PLAGIARISM_SENTENCE_WORDS: int = 15
     MIN_KEY_TERMS: int = 2
+    # Минимальная доля кириллических букв: локальная модель иногда
+    # соскальзывает в китайский/английский на русскоязычной статье.
+    MIN_CYRILLIC_SHARE: float = 0.3
 
     async def process(self, state: Dict[str, Any]) -> Dict[str, Any]:
         summary = (state.get("summary") or "").strip()
@@ -36,6 +39,13 @@ class ValidatorAgent(Agent):
             errors.append(f"Резюме слишком короткое: {wc} слов (мин. {self.MIN_WORDS})")
         if wc > self.MAX_WORDS:
             warnings.append(f"Резюме длинное: {wc} слов (макс. {self.MAX_WORDS})")
+
+        # Резюме обязано быть на русском (эталоны и БЗ проекта — русские)
+        cyr_share = self._cyrillic_share(summary)
+        if cyr_share < self.MIN_CYRILLIC_SHARE:
+            errors.append(
+                f"Резюме не на русском языке (кириллицы {cyr_share:.0%})"
+            )
 
         if article_text:
             copied = self._find_copied(summary, article_text)
@@ -70,6 +80,17 @@ class ValidatorAgent(Agent):
     @staticmethod
     def _count_words(text: str) -> int:
         return len(re.findall(r"\w+", text, flags=re.UNICODE))
+
+    @staticmethod
+    def _cyrillic_share(text: str) -> float:
+        """Доля кириллических букв среди всех букв текста."""
+        letters = [ch for ch in text.lower() if ch.isalpha()]
+        if not letters:
+            return 0.0
+        cyrillic = sum(
+            1 for ch in letters if "а" <= ch <= "я" or ch == "ё"
+        )
+        return cyrillic / len(letters)
 
     @staticmethod
     def _split_sentences(text: str) -> List[str]:

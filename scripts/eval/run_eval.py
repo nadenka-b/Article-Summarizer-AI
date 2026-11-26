@@ -17,6 +17,7 @@ data/processed/*.json, где есть и полный текст, и этало
 import argparse
 import asyncio
 import json
+import os
 import re
 import statistics
 import sys
@@ -118,11 +119,20 @@ def bertscore_metrics(hypotheses: list[str], references: list[str]) -> dict:
     """BERTScore (опционально, медленно на CPU)."""
     from bert_score import score
 
+    from backend.core.config import get_settings
+
+    # Токен из .env: без него HF Hub пускает как анонима — реже лимиты,
+    # медленнее скачивание модели.
+    if get_settings().HF_TOKEN:
+        os.environ.setdefault("HF_TOKEN", get_settings().HF_TOKEN)
+
+    # P, R, F1 — torch-тензоры: statistics.mean их не принимает
+    # (ждёт Fraction-совместимые числа), усредняем средствами тензора.
     P, R, F1 = score(hypotheses, references, lang="ru", verbose=False)
     return {
-        "bertscore_p": round(float(statistics.mean(P)), 4),
-        "bertscore_r": round(float(statistics.mean(R)), 4),
-        "bertscore_f1": round(float(statistics.mean(F1)), 4),
+        "bertscore_p": round(float(P.mean()), 4),
+        "bertscore_r": round(float(R.mean()), 4),
+        "bertscore_f1": round(float(F1.mean()), 4),
     }
 
 

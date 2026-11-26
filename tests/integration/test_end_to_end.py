@@ -53,9 +53,11 @@ def fake_llm(monkeypatch):
                     "mock", "mock-model",
                 )
             return (
-                "This test summary describes a novel scientific method "
-                "for article summarization and reports improved quality "
-                "metrics. " * 4
+                "Это тестовое резюме научной статьи описывает новый метод "
+                "автоматической суммаризации публикаций и приводит "
+                "улучшенные метрики качества, данные экспериментов "
+                "и выводы о применимости подхода в редакционных "
+                "пайплайнах. " * 3
             ), "mock", "mock-model"
 
     fake = FakeLLM()
